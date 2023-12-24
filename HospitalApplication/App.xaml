@@ -1,9 +1,11 @@
 ﻿<Application x:Class="HospitalApplication.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:HospitalApplication"
+             xmlns:local="clr-namespace:HospitalApplication" xmlns:vm="clr-namespace:HospitalApplication.ViewModels"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <vm:ViewModelLocator x:Key="Locator"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
