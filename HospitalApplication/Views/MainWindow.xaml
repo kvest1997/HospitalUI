@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalUI.Views"
         mc:Ignorable="d"
-        WindowStyle="None" Background="Transparent"
+        Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
-        Height="450" Width="800">
+        Height="450" Width="800"
+        DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
+        Title="{Binding Title}"
+        >
     <Border Background="#eff2f7" CornerRadius="30">
         <Grid>
             <Grid.ColumnDefinitions>

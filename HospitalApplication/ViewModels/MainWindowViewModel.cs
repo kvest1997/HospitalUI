@@ -13,7 +13,7 @@ namespace HospitalUI.ViewModels
         #region Title : string - Заголовок
 
         /// <summary>Заголовок</summary>
-        private string _Title = "";
+        private string _Title = "Тест окна";
 
         /// <summary>Заголовок</summary>
         public string Title { get => _Title; set => Set(ref _Title, value); }
