@@ -8,7 +8,18 @@ namespace Hospital.DAL.Context
 {
     public class DataContextBase : DbContext
     {
+        public virtual DbSet<Analysis> Analyses { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<Diagnosis> Diagnoses { get; set; }
+        public virtual DbSet<Doctor> Doctors { get; set; }
+        public virtual DbSet<ExaminationResult> ExaminationResults { get; set; }
+        public virtual DbSet<Hospital.DAL.Entityes.Hospital> Hospitals { get; set; }
+        public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<PrescribedTreatment> PrescribedTreatments { get; set; }
+        public virtual DbSet<Specialization> Specializations { get; set; }
+        public virtual DbSet<Staff> Staff { get; set; }
 
-        public DataContextBase(DbContextOptions options) : base(options) { }
+        public DataContextBase(DbContextOptions<DataContextBase> options) : base(options) { }
     }
 }

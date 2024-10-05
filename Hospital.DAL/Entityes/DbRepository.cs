@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Hospital.DAL
+namespace Hospital.DAL.Entityes
 {
     internal class DbRepository<T> : IRepository<T> where T : Entity, new()
     {
@@ -16,8 +16,8 @@ namespace Hospital.DAL
 
         public bool AutoSaveChanges { get; set; } = true;
 
-        public DbRepository(DataContextBase db) 
-        { 
+        public DbRepository(DataContextBase db)
+        {
             _db = db;
             _Set = db.Set<T>();
         }
@@ -30,7 +30,7 @@ namespace Hospital.DAL
 
         public T Add(T item)
         {
-            if (item is null) 
+            if (item is null)
                 throw new ArgumentNullException(nameof(item));
             _db.Entry(item).State = EntityState.Added;
 
@@ -42,7 +42,7 @@ namespace Hospital.DAL
 
         public async Task<T> AddAsync(T item, CancellationToken Cancel = default)
         {
-            if (item is null) 
+            if (item is null)
                 throw new ArgumentNullException(nameof(item));
 
             _db.Entry(item).State = EntityState.Added;

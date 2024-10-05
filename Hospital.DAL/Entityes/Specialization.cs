@@ -1,12 +1,18 @@
 ﻿using Hospital.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+
+#nullable disable
 
 namespace Hospital.DAL.Entityes
 {
-    public class Specializations : IEntity
+    public partial class Specialization : IEntity
     {
+        public Specialization()
+        {
+            Doctors = new HashSet<Doctor>();
+        }
+
         public int Id { get; set; }
         public string SpecializationName { get; set; }
 

@@ -1,11 +1,10 @@
-﻿using Hospital.DAL.Entityes;
-using Hospital.Interfaces;
+﻿using Hospital.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Hospital.DAL
+namespace Hospital.DAL.Entityes
 {
     public static class RepositoryRegistrator
     {

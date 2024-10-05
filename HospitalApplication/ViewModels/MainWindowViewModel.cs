@@ -13,7 +13,6 @@ namespace HospitalUI.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
-        private readonly IRepository<Book> _BooksRepository;
 
         #region Title : string - Заголовок
 
@@ -24,11 +23,9 @@ namespace HospitalUI.ViewModels
         public string Title { get => _Title; set => Set(ref _Title, value); }
         #endregion
 
-        public MainWindowViewModel(IRepository<Book> BooksRepository)
+        public MainWindowViewModel()
         {
-            _BooksRepository = BooksRepository;
 
-            var books = BooksRepository.Items.Take(10).ToArray();
         }
     }
 }

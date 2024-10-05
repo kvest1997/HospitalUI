@@ -1,5 +1,5 @@
-﻿using Hospital.DAL;
-using Hospital.DAL.Context;
+﻿using Hospital.DAL.Context;
+using Hospital.DAL.Entityes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
