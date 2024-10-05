@@ -12,13 +12,14 @@ namespace HospitalApplication
     /// </summary>
     public partial class App : Application
     {
-        private static IHost __Host;
+        private static IHost? __Host;
         public static IHost Host => __Host 
             ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).Build();
 
         public static IServiceProvider Services => Host.Services;
 
-        internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+        internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) 
+		    => services
             .AddServices()
             .AddViewModel()
             .AddDatabase(host.Configuration.GetSection("Database"))

@@ -1,4 +1,5 @@
-﻿using Hospital.DAL.Context;
+﻿using Hospital.DAL;
+using Hospital.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,7 @@ namespace HospitalApplication.Data
     {
         public static IServiceCollection AddDatabase(this IServiceCollection services,
             IConfiguration configuration) => services
-            .AddDbContext<TestDB>(opt =>
+            .AddDbContext<DataContextBase>(opt =>
             {
                 var type = configuration["Type"];
                 switch (type)
@@ -30,6 +31,7 @@ namespace HospitalApplication.Data
                 }
             })
             .AddTransient<DbInitializer>()
+            .AddRepositoruesInDB()
             ;
     }
 }

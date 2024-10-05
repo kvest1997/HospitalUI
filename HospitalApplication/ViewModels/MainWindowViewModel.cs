@@ -1,5 +1,8 @@
-﻿using HospitalUI.ViewModels.Base;
+﻿using Hospital.DAL.Entityes;
+using Hospital.Interfaces;
+using HospitalUI.ViewModels.Base;
 using MathCore.Values;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,8 @@ namespace HospitalUI.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
+        private readonly IRepository<Book> _BooksRepository;
+
         #region Title : string - Заголовок
 
         /// <summary>Заголовок</summary>
@@ -18,5 +23,12 @@ namespace HospitalUI.ViewModels
         /// <summary>Заголовок</summary>
         public string Title { get => _Title; set => Set(ref _Title, value); }
         #endregion
+
+        public MainWindowViewModel(IRepository<Book> BooksRepository)
+        {
+            _BooksRepository = BooksRepository;
+
+            var books = BooksRepository.Items.Take(10).ToArray();
+        }
     }
 }
