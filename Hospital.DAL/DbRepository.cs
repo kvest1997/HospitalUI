@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hospital.DAL
 {
-    class DbRepository<T> : IRepository<T> where T : Entity, new()
+    internal class DbRepository<T> : IRepository<T> where T : Entity, new()
     {
         private readonly DataContextBase _db;
         private readonly DbSet<T> _Set;

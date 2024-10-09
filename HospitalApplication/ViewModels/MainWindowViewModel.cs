@@ -1,7 +1,6 @@
 ﻿using Hospital.DAL.Entityes;
 using Hospital.Interfaces;
 using HospitalUI.ViewModels.Base;
-using MathCore.Values;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

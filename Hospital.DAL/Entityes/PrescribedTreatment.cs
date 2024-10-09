@@ -1,4 +1,5 @@
-﻿using Hospital.Interfaces;
+﻿using Hospital.DAL.Entityes.Base;
+using Hospital.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -6,9 +7,8 @@ using System.Collections.Generic;
 
 namespace Hospital.DAL.Entityes
 {
-    public partial class PrescribedTreatment : IEntity
+    public partial class PrescribedTreatment : Entity
     {
-        public int Id { get; set; }
         public int? AnalysesId { get; set; }
         public int? ExaminationResultsId { get; set; }
         public string Treatment { get; set; }

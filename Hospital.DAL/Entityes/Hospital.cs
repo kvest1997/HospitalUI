@@ -1,4 +1,5 @@
-﻿using Hospital.Interfaces;
+﻿using Hospital.DAL.Entityes.Base;
+using Hospital.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -6,14 +7,13 @@ using System.Collections.Generic;
 
 namespace Hospital.DAL.Entityes
 {
-    public partial class Hospital : IEntity
+    public partial class Hospital : Entity
     {
         public Hospital()
         {
             Appointments = new HashSet<Appointment>();
         }
 
-        public int Id { get; set; }
         public int NumberHospital { get; set; }
         public string AdressHospital { get; set; }
         public int NumberPhoneHospital { get; set; }

@@ -1,4 +1,5 @@
-﻿using Hospital.Interfaces;
+﻿using Hospital.DAL.Entityes.Base;
+using Hospital.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -6,14 +7,13 @@ using System.Collections.Generic;
 
 namespace Hospital.DAL.Entityes
 {
-    public partial class Position : IEntity
+    public partial class Position : Entity
     {
         public Position()
         {
             Staff = new HashSet<Staff>();
         }
 
-        public int Id { get; set; }
         public string PositionName { get; set; }
 
         public virtual ICollection<Staff> Staff { get; set; }
