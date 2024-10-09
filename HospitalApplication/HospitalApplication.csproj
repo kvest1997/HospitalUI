@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="FontAwesome5" Version="2.1.11" />
-    <PackageReference Include="MathCore.WPF" Version="0.0.44.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>

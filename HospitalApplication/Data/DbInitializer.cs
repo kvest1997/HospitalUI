@@ -29,11 +29,7 @@ namespace HospitalApplication.Data
             await _db.Database.MigrateAsync().ConfigureAwait(false);
             _Logger.LogInformation($"Миграция БД выполненан за {timer.ElapsedMilliseconds} мс");
 
-            //if (await _db.Books.AnyAsync()) return;
-
-
             _Logger.LogInformation($"Инициализация БД выполнена за {timer.Elapsed.TotalSeconds} с");
         }
-
     }
 }

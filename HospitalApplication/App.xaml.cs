@@ -32,7 +32,7 @@ namespace HospitalApplication
             using (var scope = Services.CreateScope())
                 await scope.ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync();
 
-                base.OnStartup(e);
+            base.OnStartup(e);
             await host.StartAsync();
         }
 

@@ -10,12 +10,12 @@ namespace Hospital.DAL.Entityes
     {
         public Position()
         {
-            staff = new HashSet<Staff>();
+            Staff = new HashSet<Staff>();
         }
 
         public int Id { get; set; }
         public string PositionName { get; set; }
 
-        public virtual ICollection<Staff> staff { get; set; }
+        public virtual ICollection<Staff> Staff { get; set; }
     }
 }

@@ -8,8 +8,9 @@
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
         Height="450" Width="800"
+        
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
-        Title="{Binding Title}"
+        Title="{Binding Title}" WindowStyle="None"
         >
     <Border Background="#eff2f7" CornerRadius="30">
         <Grid>
