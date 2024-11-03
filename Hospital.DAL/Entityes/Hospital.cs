@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Hospital.DAL.Entityes
 {
-    public partial class Hospital : Entity
+    public partial class Hospitals : Entity
     {
-        public Hospital()
+        public Hospitals()
         {
             Appointments = new HashSet<Appointment>();
         }

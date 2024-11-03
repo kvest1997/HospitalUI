@@ -148,7 +148,7 @@ namespace Hospital.DAL.Migrations
                     b.ToTable("ExaminationResults");
                 });
 
-            modelBuilder.Entity("Hospital.DAL.Entityes.Hospital", b =>
+            modelBuilder.Entity("Hospital.DAL.Entityes.Hospitals", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -293,7 +293,7 @@ namespace Hospital.DAL.Migrations
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId");
 
-                    b.HasOne("Hospital.DAL.Entityes.Hospital", "Hospital")
+                    b.HasOne("Hospital.DAL.Entityes.Hospitals", "Hospital")
                         .WithMany("Appointments")
                         .HasForeignKey("HospitalId");
 
@@ -332,7 +332,7 @@ namespace Hospital.DAL.Migrations
                     b.Navigation("Diagnoses");
                 });
 
-            modelBuilder.Entity("Hospital.DAL.Entityes.Hospital", b =>
+            modelBuilder.Entity("Hospital.DAL.Entityes.Hospitals", b =>
                 {
                     b.HasOne("Hospital.DAL.Entityes.Staff", "Staff")
                         .WithMany("Hospitals")
@@ -363,7 +363,7 @@ namespace Hospital.DAL.Migrations
                         .HasForeignKey("DoctorId");
 
                     b.HasOne("Hospital.DAL.Entityes.Position", "Position")
-                        .WithMany("staff")
+                        .WithMany("Staff")
                         .HasForeignKey("PositionId");
 
                     b.Navigation("Doctor");
@@ -398,7 +398,7 @@ namespace Hospital.DAL.Migrations
                     b.Navigation("PrescribedTreatments");
                 });
 
-            modelBuilder.Entity("Hospital.DAL.Entityes.Hospital", b =>
+            modelBuilder.Entity("Hospital.DAL.Entityes.Hospitals", b =>
                 {
                     b.Navigation("Appointments");
                 });
@@ -410,7 +410,7 @@ namespace Hospital.DAL.Migrations
 
             modelBuilder.Entity("Hospital.DAL.Entityes.Position", b =>
                 {
-                    b.Navigation("staff");
+                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("Hospital.DAL.Entityes.Specialization", b =>

@@ -1,17 +1,13 @@
 ﻿using Hospital.DAL.Entityes;
 using Hospital.Interfaces;
 using HospitalUI.ViewModels.Base;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalUI.ViewModels
 {
     class MainWindowViewModel : ViewModel
     {
+        private readonly IRepository<Patient> _patients;
 
         #region Title : string - Заголовок
 
@@ -22,9 +18,15 @@ namespace HospitalUI.ViewModels
         public string Title { get => _Title; set => Set(ref _Title, value); }
         #endregion
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IRepository<Patient> Patients)
         {
+            _patients = Patients;
 
+            var pat = _patients.Items.Take(5).ToList();
         }
+
+        #region Property
+
+        #endregion
     }
 }

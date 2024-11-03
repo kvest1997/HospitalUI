@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Hospital.DAL.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Hospital.DAL
 {

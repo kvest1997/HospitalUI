@@ -21,7 +21,7 @@ namespace Hospital.DAL.Entityes
         public TimeSpan TimeAppointment { get; set; }
 
         public virtual Doctor Doctor { get; set; }
-        public virtual Hospital Hospital { get; set; }
+        public virtual Hospitals Hospital { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual ICollection<ExaminationResult> ExaminationResults { get; set; }
     }

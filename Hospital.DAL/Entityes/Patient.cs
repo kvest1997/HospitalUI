@@ -22,5 +22,7 @@ namespace Hospital.DAL.Entityes
         public int? NumberPhone { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }
+
+        public string FullName => $"{SecondName} {FirstName} {LastName}";
     }
 }

@@ -11,7 +11,7 @@ namespace Hospital.DAL.Entityes
     {
         public Staff()
         {
-            Hospitals = new HashSet<Hospital>();
+            Hospitals = new HashSet<Hospitals>();
         }
 
         public int Id { get; set; }
@@ -21,6 +21,6 @@ namespace Hospital.DAL.Entityes
 
         public virtual Doctor Doctor { get; set; }
         public virtual Position Position { get; set; }
-        public virtual ICollection<Hospital> Hospitals { get; set; }
+        public virtual ICollection<Hospitals> Hospitals { get; set; }
     }
 }

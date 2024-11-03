@@ -173,7 +173,8 @@
                           CellStyle="{DynamicResource DataGridCellStyle1}" 
                           ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                           RowStyle="{DynamicResource DataGridRowStyle1}" 
-                          Grid.Row="5" x:Name="membersDataGrid">
+                          Grid.Row="5" x:Name="membersDataGrid"
+                          ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
                             <DataGridCheckBoxColumn.HeaderTemplate>
@@ -185,7 +186,7 @@
 
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" />
                         
-                        <DataGridTemplateColumn Header="Member" IsReadOnly="True" Width="*">
+                        <DataGridTemplateColumn Header="ФИО" IsReadOnly="True" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -198,9 +199,18 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTextColumn Header="Position" IsReadOnly="True" Width="auto"/>
-                        <DataGridTextColumn Header="Email" IsReadOnly="True" Width="auto"/>
-                        <DataGridTextColumn Header="Phone" IsReadOnly="True" Width="auto"/>
+                        <DataGridTextColumn Header="Адрес" 
+                                            IsReadOnly="True" 
+                                            Width="auto"
+                                            Binding="{Binding FullName}"/>
+                        <DataGridTextColumn Header="Номер телефона" 
+                                            IsReadOnly="True" 
+                                            Width="auto"
+                                            Binding="{Binding NumberPhone}"/>
+                        <DataGridTextColumn Header="День рождения" 
+                                            IsReadOnly="True" 
+                                            Width="auto"
+                                            Binding="{Binding Birthday}"/>
 
                         <DataGridTemplateColumn Header="Operation" IsReadOnly="True" Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
