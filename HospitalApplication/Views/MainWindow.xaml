@@ -64,24 +64,17 @@
                         
                         <!--Menu Buttons-->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" Background="#7b5cd6" Foreground="White">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Страница 1"/>
+                                    <Icon:PackIconMaterial Kind="Human" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Пациенты"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource menuButton}" Background="#7b5cd6" Foreground="White">
-                                <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Страница 2"/>
-                                </StackPanel>
-                            </Button>
-                            
                             <Button Style="{StaticResource menuButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Страница 3"/>
+                                    <Icon:PackIconMaterial Kind="BookAccount" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Регистрация приема"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -246,8 +239,8 @@
 
                         <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>
 
-                        <Button Style="{StaticResource pagingButton}" Content="1"/>
-                        <Button Style="{StaticResource pagingButton}" Content="2" Background="#7950f2" Foreground="#ffffff"/>
+                        <Button Style="{StaticResource pagingButton}" Content="1" Background="#7950f2" Foreground="#ffffff"/>
+                        <Button Style="{StaticResource pagingButton}" Content="2"/>
                         <Button Style="{StaticResource pagingButton}" Content="3"/>
 
                         <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>

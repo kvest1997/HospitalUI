@@ -2,6 +2,8 @@
 using Hospital.DAL.Entityes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Data;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -31,21 +33,21 @@ namespace HospitalApplication.Data
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация БД...");
 
-            _Logger.LogInformation("Удалдение существубщей БД...");
-            await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
-            _Logger.LogInformation($"Удаление существующей БД выполнено за {timer.ElapsedMilliseconds} мс");
+            //_Logger.LogInformation("Удалдение существубщей БД...");
+            //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+            //_Logger.LogInformation($"Удаление существующей БД выполнено за {timer.ElapsedMilliseconds} мс");
 
             _Logger.LogInformation("Миграция БД...");
             await _db.Database.MigrateAsync().ConfigureAwait(false);
             _Logger.LogInformation($"Миграция БД выполненан за {timer.ElapsedMilliseconds} мс");
 
-            await InitializeAnalyses();
-            await InitializePatients();
-            await InitializeSpecialization();
-            await InitializePositions();
-            await InitializeDoctors();
-            await InitializeStaffs();
-            await InitializeHospitals();
+            //await InitializeAnalyses();
+            //await InitializePatients();
+            //await InitializeSpecialization();
+            //await InitializePositions();
+            //await InitializeDoctors();
+            //await InitializeStaffs();
+            //await InitializeHospitals();
 
             _Logger.LogInformation($"Инициализация БД выполнена за {timer.Elapsed.TotalSeconds} с");
         }
@@ -71,16 +73,16 @@ namespace HospitalApplication.Data
         private async Task InitializePatients()
         {
             var timer = Stopwatch.StartNew();
-            _Logger.LogInformation("Инициализация должности...");
+            _Logger.LogInformation("Инициализация пациента...");
 
-            _positions = new Position[10];
+            _patients = new Patient[10];
             for (var i = 0; i < 10; i++)
-                _positions[i] = new Position { PositionName = $"Должность {i}"};
+                _patients[i] = new Patient { SecondName = $"Фамилия пациента {i}", FirstName = $"Имя пациента {i}", LastName =$"Отчество пациента {i}", Birthday= DateTime.Now, Adress=$"Адрес пациента {i}", NumberPhone = 8953+i+i+1 };
 
-            await _db.Positions.AddRangeAsync(_positions);
+            await _db.Patients.AddRangeAsync(_patients);
             await _db.SaveChangesAsync();
 
-            _Logger.LogInformation($"Инициализация должности выполнена за {timer.ElapsedMilliseconds} мс");
+            _Logger.LogInformation($"Инициализация пациента выполнена за {timer.ElapsedMilliseconds} мс");
         }
 
         private async Task InitializeSpecialization()
@@ -105,19 +107,19 @@ namespace HospitalApplication.Data
         private async Task InitializePositions()
         {
             var timer = Stopwatch.StartNew();
-            _Logger.LogInformation("Инициализация специализации");
+            _Logger.LogInformation("Инициализация должности");
 
-            _specializations = new Specialization[10];
+            _positions = new Position[10];
 
             for (var i = 0; i < 10; i++)
             {
-                _specializations[i] = new Specialization { SpecializationName = $"Специализация {i}" };
+                _positions[i] = new Position { PositionName = $"Должность {i}" };
             }
 
-            await _db.Specializations.AddRangeAsync(_specializations);
+            await _db.Positions.AddRangeAsync(_positions);
             await _db.SaveChangesAsync();
 
-            _Logger.LogInformation($"Инициализация специализации выполнена за {timer.ElapsedMilliseconds} мс");
+            _Logger.LogInformation($"Инициализация должности выполнена за {timer.ElapsedMilliseconds} мс");
 
         }
 

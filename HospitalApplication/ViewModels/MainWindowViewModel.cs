@@ -1,7 +1,10 @@
 ﻿using Hospital.DAL.Entityes;
 using Hospital.Interfaces;
 using HospitalUI.ViewModels.Base;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace HospitalUI.ViewModels
 {
@@ -21,11 +24,23 @@ namespace HospitalUI.ViewModels
         public MainWindowViewModel(IRepository<Patient> Patients)
         {
             _patients = Patients;
-
-            var pat = _patients.Items.Take(5).ToList();
         }
 
         #region Property
+        public IList<Patient> Patients
+        {
+            get
+            {
+                return GetPatients();
+            }
+        }
+        #endregion
+
+        #region Methods
+        private List<Patient> GetPatients()
+        {
+            return _patients.Items.Take(10).ToList();
+        }
 
         #endregion
     }
