@@ -27,20 +27,10 @@ namespace HospitalUI.ViewModels
         }
 
         #region Property
-        public IList<Patient> Patients
-        {
-            get
-            {
-                return GetPatients();
-            }
-        }
+        public IEnumerable<Patient> Patients=>_patients.Items.Take(10).ToList();
         #endregion
 
         #region Methods
-        private List<Patient> GetPatients()
-        {
-            return _patients.Items.Take(10).ToList();
-        }
 
         #endregion
     }
