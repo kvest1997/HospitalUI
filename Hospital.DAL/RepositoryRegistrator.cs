@@ -11,15 +11,15 @@ namespace Hospital.DAL
     {
         public static IServiceCollection AddRepositoruesInDB(this IServiceCollection services) => services
             .AddTransient<IRepository<Analysis>, DbRepository<Analysis>>()
-            .AddTransient<IRepository<Appointment>, DbRepository<Appointment>>()
+            .AddTransient<IRepository<Appointment>, AppointmentsRepository>()
             .AddTransient<IRepository<Diagnosis>, DbRepository<Diagnosis>>()
-            .AddTransient<IRepository<Doctor>, DbRepository<Doctor>>()
-            .AddTransient<IRepository<ExaminationResult>, DbRepository<ExaminationResult>>()
-            .AddTransient<IRepository<Hospitals>, DbRepository<Hospitals>>()
+            .AddTransient<IRepository<Doctor>, DoctorsRepository>()
+            .AddTransient<IRepository<ExaminationResult>, ExaminationResultsRepository>()
+            .AddTransient<IRepository<Hospitals>, HospitalRepository>()
             .AddTransient<IRepository<Patient>, DbRepository<Patient>>()
             .AddTransient<IRepository<Position>, DbRepository<Position>>()
-            .AddTransient<IRepository<PrescribedTreatment>, DbRepository<PrescribedTreatment>>()
+            .AddTransient<IRepository<PrescribedTreatment>, PrescribedTreatmentsRepository>()
             .AddTransient<IRepository<Specialization>, DbRepository<Specialization>>()
-            .AddTransient<IRepository<Staff>, DbRepository<Staff>>();
+            .AddTransient<IRepository<Staff>, StaffRepository>();
     }
 }

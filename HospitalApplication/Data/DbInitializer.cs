@@ -14,14 +14,6 @@ namespace HospitalApplication.Data
         private readonly DataContextBase _db;
         private readonly ILogger<DbInitializer> _Logger;
 
-        private Doctor[] _doctors;
-        private Patient[] _patients;
-        private Specialization[] _specializations;
-        private Position[] _positions;
-        private Staff[] _staffs;
-        private Hospitals[] _hospitals;
-        private Analysis[] _analyses;
-
         public DbInitializer(DataContextBase db, ILogger<DbInitializer> Logger)
         {
             _db = db;
@@ -41,6 +33,7 @@ namespace HospitalApplication.Data
             await _db.Database.MigrateAsync().ConfigureAwait(false);
             _Logger.LogInformation($"Миграция БД выполненан за {timer.ElapsedMilliseconds} мс");
 
+            #region Добавление тестовых данных - !!!ДЛЯ ПЕРВОГО ЗАПУСКА
             //await InitializeAnalyses();
             //await InitializePatients();
             //await InitializeSpecialization();
@@ -48,12 +41,40 @@ namespace HospitalApplication.Data
             //await InitializeDoctors();
             //await InitializeStaffs();
             //await InitializeHospitals();
+            //await InitializeDiagnoses();
+            #endregion
 
             _Logger.LogInformation($"Инициализация БД выполнена за {timer.Elapsed.TotalSeconds} с");
+        }
+        
+        private async Task InitializeDiagnoses()
+        {
+            Diagnosis[] _diagnoses;
+
+            var timer = Stopwatch.StartNew();
+            _Logger.LogInformation("Инициализация диазнозов...");
+
+            _diagnoses = new Diagnosis[10];
+            for (int i = 0; i < 10; i++)
+            {
+                _diagnoses[i] = new Diagnosis 
+                { 
+                    DiagnosesBlock = $"Блок диагноза {i}", 
+                    DiagnosesClass = $"Класс диагонза {i}", 
+                    DiagnosesName = $"Название диагноза {i}" 
+                };
+            }
+
+            await _db.Diagnoses.AddRangeAsync(_diagnoses);
+            await _db.SaveChangesAsync();
+
+            _Logger.LogInformation($"Инициализация диазнозов выполнена за {timer.ElapsedMilliseconds} мс");
         }
 
         private async Task InitializeAnalyses()
         {
+            Analysis[] _analyses;
+
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация анализов...");
 
@@ -72,6 +93,8 @@ namespace HospitalApplication.Data
 
         private async Task InitializePatients()
         {
+            Patient[] _patients;
+
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация пациента...");
 
@@ -87,6 +110,8 @@ namespace HospitalApplication.Data
 
         private async Task InitializeSpecialization()
         {
+            Specialization[] _specializations;
+
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация специализации");
 
@@ -106,6 +131,8 @@ namespace HospitalApplication.Data
 
         private async Task InitializePositions()
         {
+            Position[] _positions;
+
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация должности");
 
@@ -125,6 +152,8 @@ namespace HospitalApplication.Data
 
         private async Task InitializeDoctors()
         {
+            Doctor[] _doctors;
+
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация докторов");
 
@@ -143,6 +172,8 @@ namespace HospitalApplication.Data
 
         private async Task InitializeStaffs()
         {
+            Staff[] _staffs;
+         
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация персонала");
 
@@ -161,6 +192,8 @@ namespace HospitalApplication.Data
 
         private async Task InitializeHospitals()
         {
+            Hospitals[] _hospitals;
+
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация больниц");
 

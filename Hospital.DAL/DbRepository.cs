@@ -7,6 +7,8 @@ using System.Linq;
 using Hospital.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Hospital.DAL.Entityes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hospital.DAL
 {
@@ -84,6 +86,76 @@ namespace Hospital.DAL
 
             if (AutoSaveChanges)
                 await _db.SaveChangesAsync().ConfigureAwait(false);
+        }
+    }
+
+    class StaffRepository : DbRepository<Staff>
+    {
+        public override IQueryable<Staff> Items => 
+            base.Items
+            .Include(item => item.Doctor)
+            .Include(item => item.Position);
+
+        public StaffRepository(DataContextBase db) : base(db)
+        {
+        }
+    }
+
+    class PrescribedTreatmentsRepository : DbRepository<PrescribedTreatment>
+    {
+        public override IQueryable<PrescribedTreatment> Items =>
+            base.Items
+            .Include(item => item.Analyses)
+            .Include(item => item.ExaminationResults);
+
+        public PrescribedTreatmentsRepository(DataContextBase db) : base(db)
+        {
+        }
+    }
+
+    class HospitalRepository : DbRepository<Hospitals>
+    {
+        public override IQueryable<Hospitals> Items =>
+            base.Items
+            .Include(item => item.Staff);
+
+        public HospitalRepository(DataContextBase db) : base(db)
+        {
+        }
+    }
+
+    class ExaminationResultsRepository : DbRepository<ExaminationResult>
+    {
+        public override IQueryable<ExaminationResult> Items =>
+            base.Items
+            .Include(item => item.Appointment)
+            .Include(item => item.Diagnoses);
+
+        public ExaminationResultsRepository(DataContextBase db) : base(db)
+        {
+        }
+    }
+
+    class DoctorsRepository : DbRepository<Doctor>
+    {
+        public override IQueryable<Doctor> Items =>
+            base.Items
+            .Include(item => item.Specialization);
+
+        public DoctorsRepository(DataContextBase db) : base(db)
+        {
+        }
+    }
+
+    class AppointmentsRepository : DbRepository<Appointment>
+    {
+        public override IQueryable<Appointment> Items =>
+            base.Items
+            .Include(item => item.Hospital)
+            .Include(item => item.Doctor);
+
+        public AppointmentsRepository(DataContextBase db) : base(db)
+        {
         }
     }
 }
