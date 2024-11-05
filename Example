@@ -1,0 +1,236 @@
+//Convert bool
+    [ValueConversion(typeof(bool), typeof(bool))]
+    public class InverseBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(bool))
+            {
+                throw new InvalidOperationException("Целевой тип не является Bool");
+            }
+            return !(bool)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+//Convert default
+ public class DateToDisplayConvert : IValueConverter
+ {
+     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+     {
+         if (value == null) return "";
+
+         DateTime val = (DateTime)value;
+         return val.ToString();
+     }
+
+     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+     {
+         return null;
+     }
+ }
+
+//View DataTemplate
+<Grid Grid.Row="13" Grid.ColumnSpan="2">
+    <DataGrid ItemsSource="{Binding SelectedRequestExpansionMmr.UoWithErrorsMmr, Mode=TwoWay}"
+              AutoGenerateColumns="False"
+              CanUserAddRows="False"
+              SelectionUnit="FullRow">
+        <DataGrid.Columns>
+            <DataGridTextColumn>
+                <DataGridTextColumn.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock/>
+                    </DataTemplate>
+                </DataGridTextColumn.HeaderTemplate>
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock"/>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
+            <DataGridTemplateColumn IsReadOnly="True" Header="Обозначение МТР">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <ListBox ItemsSource="{Binding UoFields, ValidatesOnDataErrors=True}">
+
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border x:Name="border">
+                                            <TextBlock Text="{Binding UoValue, ValidatesOnDataErrors=True}"/>
+                                        </Border>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsMatch}"  Value="False">
+                                                <Setter TargetName="border" Property="ToolTip" Value="{Binding MessageStatusUo}"/>
+                                                <Setter TargetName="border" Property="BorderBrush" Value="Red"/>
+                                                <Setter TargetName="border" Property="BorderThickness" Value="1"/>
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding UoWithErrorsMmr.IsRegistered}"  Value="True">
+                                                <Setter TargetName="border" Property="BorderBrush" Value="Green"/>
+                                                <Setter TargetName="border" Property="BorderThickness" Value="1"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            
+                            </ListBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
+            <DataGridTemplateColumn Header="Статус" IsReadOnly="True" Width="*">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Left" Margin="5 0 5 0"
+                                FontSize="12"
+                                Text="{Binding StatusMessageMmr}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+                
+        </DataGrid.Columns>
+    </DataGrid>
+</Grid>
+
+/// <summary>
+/// Класс для управления уведомлениями
+/// </summary>
+public class NotificationManager
+{
+    /// <summary>
+    /// Отображает уведомление
+    /// </summary>
+    /// <param name="title">Заголовок уведомления</param>
+    /// <param name="message">Сообщение уведомления</param>
+    /// <param name="type">Тип уведомления</param>
+    /// <param name="onClick">Действие по нажатию на окно уведомления</param>
+    /// <param name="expirationTime">Время видимости уведомления</param>
+    public void Show(string title, string message, NotificationType type, double expirationTime, Action onClick = null)
+    {
+        var notificationManager = new Notifications.Wpf.NotificationManager();
+
+        notificationManager.Show(new NotificationContent
+        {
+            Title = title,
+            Message = message,
+            Type = type,
+        }, expirationTime: TimeSpan.FromSeconds(expirationTime), onClick: onClick);
+    }
+}
+
+//Navigation
+[Serializable]
+public class NavigationParameters : Dictionary<string, object>
+{
+    public static NavigationParameters Empty => new NavigationParameters();
+
+    public NavigationParameters()
+    {
+    }
+
+    protected NavigationParameters(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
+}
+
+public class NavigationHelper : INavigationHelper
+{
+    public async Task ShowWindow<T>(NavigationParameters parameters = null) where T : ViewModelBase
+    {
+        var viewModelTypeName = typeof(T).FullName;
+
+        var viewModelIndex = viewModelTypeName.LastIndexOf(
+            "ViewModel", StringComparison.InvariantCultureIgnoreCase);
+
+        var viewPattern = viewModelTypeName.Substring(0, viewModelIndex).Replace("ViewModels", "Views");
+
+        var type = Type.GetType(viewPattern);
+        if (type == null)
+        {
+            type = Type.GetType($"{viewPattern}View");
+        }
+
+        await DispatcherHelper.RunAsync(async () =>
+        {
+            var view = (Window)Activator.CreateInstance(type);
+            view.Owner = Application.Current.MainWindow;
+
+            if (view.DataContext is T viewModel)
+            {
+                if (viewModel is INavigationAware navigationAware)
+                {
+                    var navigationParameters = parameters ?? NavigationParameters.Empty;
+                    await navigationAware.OnNavigatedTo(navigationParameters);
+                }
+            }
+
+            view.ShowDialog();
+        });
+    }
+
+    public async Task<bool> ShowWindowWithResult<T>(NavigationParameters parameters = null) where T : ViewModelBase
+    {
+        bool? resultDialog = null;
+        var viewModelTypeName = typeof(T).FullName;
+
+        var viewModelIndex = viewModelTypeName.LastIndexOf(
+            "ViewModel", StringComparison.InvariantCultureIgnoreCase);
+
+        var viewPattern = viewModelTypeName.Substring(0, viewModelIndex).Replace("ViewModels", "Views");
+
+        var type = Type.GetType(viewPattern);
+        if (type == null)
+        {
+            type = Type.GetType($"{viewPattern}View");
+        }
+
+        await DispatcherHelper.RunAsync(async () =>
+        {
+            var view = (Window)Activator.CreateInstance(type);
+            view.Owner = Application.Current.MainWindow;
+
+            if (view.DataContext is T viewModel)
+            {
+                if (viewModel is INavigationAware navigationAware)
+                {
+                    var navigationParameters = parameters ?? NavigationParameters.Empty;
+                    await navigationAware.OnNavigatedTo(navigationParameters);
+                }
+            }
+
+            view.ShowDialog();
+            resultDialog = view.DialogResult;
+        });
+        
+        var result = resultDialog == true ? true : false;
+
+        return result;
+
+    }
+}
+
+public interface INavigationHelper
+{
+    Task ShowWindow<T>(NavigationParameters parameters = null) where T : ViewModelBase;
+
+    Task<bool> ShowWindowWithResult<T>(NavigationParameters parameters = null) where T : ViewModelBase;
+}
+
+    interface INavigationAware
+    {
+        Task OnNavigatedTo(NavigationParameters parameters);
+    }
