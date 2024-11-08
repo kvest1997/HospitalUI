@@ -28,10 +28,10 @@ namespace HospitalApplication.Data
             //_Logger.LogInformation("Удалдение существубщей БД...");
             //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
             //_Logger.LogInformation($"Удаление существующей БД выполнено за {timer.ElapsedMilliseconds} мс");
-
-            _Logger.LogInformation("Миграция БД...");
-            await _db.Database.MigrateAsync().ConfigureAwait(false);
-            _Logger.LogInformation($"Миграция БД выполненан за {timer.ElapsedMilliseconds} мс");
+            //_db.Database.EnsureCreated();
+            //_Logger.LogInformation("Миграция БД...");
+            //await _db.Database.MigrateAsync().ConfigureAwait(false);
+            //_Logger.LogInformation($"Миграция БД выполненан за {timer.ElapsedMilliseconds} мс");
 
             #region Добавление тестовых данных - !!!ДЛЯ ПЕРВОГО ЗАПУСКА
             //await InitializeAnalyses();

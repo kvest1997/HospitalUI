@@ -64,14 +64,16 @@
                         
                         <!--Menu Buttons-->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}" Background="#7b5cd6" Foreground="White">
+                            <Button Style="{StaticResource menuButton}"  Foreground="White"
+                                    Command="{Binding OpenPatientsGridCommand, UpdateSourceTrigger=PropertyChanged}">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="Human" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Пациенты"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" Foreground="White"
+                                    Command="{Binding ShowPatientRegistrationViewCommand, UpdateSourceTrigger=PropertyChanged}">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="BookAccount" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Регистрация пациента"/>
@@ -95,9 +97,6 @@
             <!--Main Section-->
             <Grid Grid.Column="1" Margin="30 20 20 20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -127,108 +126,9 @@
                 </Button>
                 
                 <!--Page Title-->
-                <TextBlock Text="Members" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
-                           HorizontalAlignment="Left" Foreground="#121518"/>
-                
-                <!--Add Button-->
-                <Button Style="{StaticResource addButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
-                        <TextBlock Text="Добавить"/>
-                    </StackPanel>
-                </Button>
-                
-                <!--separator-->
-                <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 0 10"/>
-                
-                <!--Tab Buttons-->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 10 0 0">
-                    <Button Content="ТЕКС ТЕСТ" Style="{StaticResource tabButton}" BorderBrush="#784ff2"/>
-                </StackPanel>
-                
-                <!--Counter Title-->
-                <TextBlock Text="Title" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
-                           Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                
-                <TextBlock Text="filter by" Grid.Row="4" FontSize="13" FontWeight="SemiBold" Margin="0 0 215 0"
-                           Foreground="#121518" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-
-                <!--Filter TextBox-->
-                <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
-                    <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                               Panel.ZIndex="1" Text="Search by filter here..."
-                               Visibility="{Binding ElementName=txtFilter,Path=Text.IsEmpty,Converter={StaticResource BoolToVis}}"/>
-                    <TextBox x:Name="txtFilter" Style="{StaticResource textboxFilter}"/>
-                </Grid>
-
-                <!--Memebers Datagrid-->
-                <DataGrid Style="{DynamicResource DataGridStyle1}" 
-                          CellStyle="{DynamicResource DataGridCellStyle1}" 
-                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-                          RowStyle="{DynamicResource DataGridRowStyle1}" 
-                          Grid.Row="5" x:Name="membersDataGrid"
-                          ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
-                            <DataGridCheckBoxColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
-                                </DataTemplate>
-                            </DataGridCheckBoxColumn.HeaderTemplate>
-                        </DataGridCheckBoxColumn>
-
-                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" />
-                        
-                        <DataGridTemplateColumn Header="ФИО" IsReadOnly="True" Width="*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="Red">
-                                            <TextBlock Text="..." VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
-                                        </Border>
-                                        <TextBlock Text="..." VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <DataGridTextColumn Header="Адрес" 
-                                            IsReadOnly="True" 
-                                            Width="auto"
-                                            Binding="{Binding FullName}"/>
-                        <DataGridTextColumn Header="Номер телефона" 
-                                            IsReadOnly="True" 
-                                            Width="auto"
-                                            Binding="{Binding NumberPhone}"/>
-                        <DataGridTextColumn Header="День рождения" 
-                                            IsReadOnly="True" 
-                                            Width="auto"
-                                            Binding="{Binding Birthday}"/>
-
-                        <DataGridTemplateColumn Header="Operation" IsReadOnly="True" Width="auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Style="{StaticResource gridEditButton}">
-                                            <Icon:PackIconMaterial Kind="PencilOutline" 
-                                                                   Style="{StaticResource gridButtonIcon}"/>
-                                        </Button>
-
-                                        <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0">
-                                            <Icon:PackIconMaterial Kind="DeleteOutline" 
-                                                                   Style="{StaticResource gridButtonIcon}"/>
-                                        </Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                    </DataGrid.Columns>
-                </DataGrid>
-                
-                
+                <UserControl Grid.Row="2" Margin="5" Content="{Binding CurrentViewModel}"/>
                 <!--Pagination Section-->
-                <Border Grid.Row="6" HorizontalAlignment="Right" 
+                <Border Grid.Row="3" HorizontalAlignment="Right" 
                         BorderBrush="#dee4ec" BorderThickness="1"
                         CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
                     <StackPanel Orientation="Horizontal">

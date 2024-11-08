@@ -4,5 +4,9 @@ namespace HospitalApplication.ViewModels
 {
     internal class PatientRegistrationViewModel : ViewModel
     {
+        public PatientRegistrationViewModel()
+        {
+
+        }
     }
 }

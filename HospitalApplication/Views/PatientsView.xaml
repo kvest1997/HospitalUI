@@ -4,9 +4,118 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HospitalApplication.Views"
+            xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:vm="clr-namespace:HospitalApplication.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+            d:DataContext="{d:DesignInstance {x:Type vm:PatientsViewModel}, IsDesignTimeCreatable=True}"
+             >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Список пациентов" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
+                           HorizontalAlignment="Left" Foreground="#121518"/>
+
+        <!--Add Button-->
+        <Button Style="{StaticResource addButton}">
+            <StackPanel Orientation="Horizontal">
+                <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
+                <TextBlock Text="Добавить"/>
+            </StackPanel>
+        </Button>
+
+        <!--separator-->
+        <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 -1 0 10"/>
+
+        <!--Tab Buttons-->
+
+
+        <!--Counter Title-->
+        <TextBlock Text="Поиск" Grid.Row="4" FontSize="13" FontWeight="SemiBold" Margin="0 0 215 0"
+                           Foreground="#121518" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+        <!--Filter TextBox-->
+        <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
+            <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
+                               Panel.ZIndex="1" Text="Поиск..."
+                               Visibility="{Binding ElementName=txtFilter,Path=Text.IsEmpty,Converter={StaticResource BoolToVis}}"/>
+            <TextBox x:Name="txtFilter" Style="{StaticResource textboxFilter}"/>
+        </Grid>
+
+        <!--Memebers Datagrid-->
+        <DataGrid Style="{DynamicResource DataGridStyle1}" 
+                          CellStyle="{DynamicResource DataGridCellStyle1}" 
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                          RowStyle="{DynamicResource DataGridRowStyle1}" 
+                          Grid.Row="5" x:Name="membersDataGrid"
+                          ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
+                    <DataGridCheckBoxColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
+                        </DataTemplate>
+                    </DataGridCheckBoxColumn.HeaderTemplate>
+                </DataGridCheckBoxColumn>
+
+               
+                <DataGridTemplateColumn Header="ФИО" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="Red">
+                                    <TextBlock Text="{Binding SecondName}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
+                                </Border>
+                                <TextBlock Text="{Binding FullName}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Адрес" 
+                                            IsReadOnly="True" 
+                                            Width="*"
+                                            Binding="{Binding Adress}"/>
+                <DataGridTextColumn Header="Номер телефона" 
+                                            IsReadOnly="True" 
+                                            Width="*"
+                                            Binding="{Binding NumberPhone}"/>
+                <DataGridTextColumn Header="День рождения" 
+                                            IsReadOnly="True" 
+                                            Width="*"
+                                            Binding="{Binding Birthday}"
+                                    />
+
+                <DataGridTemplateColumn Header="Operation" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource gridEditButton}">
+                                    <Icon:PackIconMaterial Kind="PencilOutline" 
+                                                                   Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+
+                                <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0">
+                                    <Icon:PackIconMaterial Kind="DeleteOutline" 
+                                                                   Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

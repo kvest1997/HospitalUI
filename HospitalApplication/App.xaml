@@ -4,8 +4,9 @@
              xmlns:local="clr-namespace:HospitalApplication" 
 			 xmlns:vm="clr-namespace:HospitalApplication.ViewModels"
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:view="clr-namespace:HospitalApplication.Views"
              StartupUri="Views/MainWindow.xaml"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+            xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Application.Resources>
         <ResourceDictionary>
             <vm:ViewModelLocator x:Key="Locator"/>
@@ -96,6 +97,14 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <DataTemplate DataType="{x:Type vm:PatientRegistrationViewModel}">
+                <view:PatientRegistrationView DataContext="{Binding}"/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vm:PatientsViewModel}">
+                <view:PatientsView DataContext="{Binding}"/>
+            </DataTemplate>
 
             <Style x:Key="addButton" TargetType="Button">
                 <Setter Property="Background" Value="#6741d9"/>

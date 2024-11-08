@@ -30,15 +30,16 @@ namespace HospitalUI.ViewModels
 
         #region Commands
 
-        #region ShowPatientsViewCommand - Отображение всех пациентов
-        private ICommand _showPatientsViewCommand;
-        private bool CanShowPatientsViewCommandExecte(object p) => true;
-        private void OnShowPatientsViewCommandExecuted(object p) 
+
+        #region OpenPatientsGridCommand - Отображение всех пациентов
+        private ICommand _openPatientsGridCommand;
+        private bool CanOpenPatientsGridCommandExecte(object p) => true;
+        private void OnOpenPatientsGridCommandExecuted(object p) 
         {
             CurrentViewModel = new PatientsViewModel(_patients);
         }
-        public ICommand ShowPatientsViewComand => _showPatientsViewCommand 
-            ??= new LambdaCommand(OnShowPatientsViewCommandExecuted, CanShowPatientsViewCommandExecte);
+        public ICommand OpenPatientsGridCommand => _openPatientsGridCommand
+            ??= new LambdaCommand(OnOpenPatientsGridCommandExecuted, CanOpenPatientsGridCommandExecte);
         #endregion
 
         #region ShowPatientRegistrationViewCommand - Отображение регистрации пациента на приеме
