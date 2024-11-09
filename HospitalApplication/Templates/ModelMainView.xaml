@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:view="clr-namespace:HospitalApplication.Views"
+                    xmlns:vm="clr-namespace:HospitalApplication.ViewModels">
+    <DataTemplate DataType="{x:Type vm:PatientRegistrationViewModel}">
+        <view:PatientRegistrationView DataContext="{Binding}"/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:PatientsViewModel}">
+        <view:PatientsView DataContext="{Binding}"/>
+    </DataTemplate>
+</ResourceDictionary>
