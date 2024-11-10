@@ -28,7 +28,8 @@
                            HorizontalAlignment="Left" Foreground="#121518"/>
 
         <!--Add Button-->
-        <Button Style="{StaticResource addButton}">
+        <Button Style="{StaticResource addButton}"
+                Command="{Binding CreatePatientCommand}">
             <StackPanel Orientation="Horizontal">
                 <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
                 <TextBlock Text="Добавить"/>

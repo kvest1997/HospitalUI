@@ -1,4 +1,5 @@
-﻿using HospitalApplication.Data;
+﻿using Hospital.DAL;
+using HospitalApplication.Data;
 using HospitalApplication.Services;
 using HospitalApplication.ViewModels;
 using Microsoft.Extensions.DependencyInjection;

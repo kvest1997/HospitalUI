@@ -1,10 +1,7 @@
-﻿using HospitalApplication.Services.Interfaces;
+﻿using Hospital.DAL;
+using Hospital.Interfaces;
+using HospitalApplication.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalApplication.Services
 {
@@ -12,6 +9,7 @@ namespace HospitalApplication.Services
     {
         public static IServiceCollection AddServices(this IServiceCollection services) => services
             .AddTransient<IRegistoryPatientService, RegistoryPatientService>()
+            .AddScoped<IDbRepositoryFactory, DbRepositoryFactory>()
             ;
     }
 }

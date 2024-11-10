@@ -4,6 +4,7 @@ using HospitalApplication.Services.Interfaces;
 using HospitalApplication.ViewModels;
 using HospitalUI.Infrastructure.Commands;
 using HospitalUI.ViewModels.Base;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,30 +14,29 @@ using System.Windows.Input;
 namespace HospitalUI.ViewModels
 {
     class MainWindowViewModel : ViewModel
-    {
-        private readonly IRepository<Patient> _patients;
+    {        
+        private readonly IServiceProvider _serviceProvider;
+
+        private readonly IDbRepositoryFactory _dbRepositoryFactory;
         private readonly IRegistoryPatientService _patientService;
 
         private ViewModel _currentViewModel;
 
-        public MainWindowViewModel(IRepository<Patient> patients, 
-            IRegistoryPatientService patientService)
+        public MainWindowViewModel(IServiceProvider serviceProvider)
         {
-            _patients = patients;
-            _patientService = patientService;
-
-            Test();
+            _serviceProvider = serviceProvider;
+            _dbRepositoryFactory = GetRepositoryFactory();
+            _patientService = GetRegitoryPatientService();
         }
 
         #region Commands
-
 
         #region OpenPatientsGridCommand - Отображение всех пациентов
         private ICommand _openPatientsGridCommand;
         private bool CanOpenPatientsGridCommandExecte(object p) => true;
         private void OnOpenPatientsGridCommandExecuted(object p) 
         {
-            CurrentViewModel = new PatientsViewModel(_patients);
+            CurrentViewModel = new PatientsViewModel(_patientService, _dbRepositoryFactory);
         }
         public ICommand OpenPatientsGridCommand => _openPatientsGridCommand
             ??= new LambdaCommand(OnOpenPatientsGridCommandExecuted, CanOpenPatientsGridCommandExecte);
@@ -67,6 +67,17 @@ namespace HospitalUI.ViewModels
         #endregion
 
         #region Methods
+
+        private IDbRepositoryFactory GetRepositoryFactory()
+        {
+            return _serviceProvider.GetRequiredService<IDbRepositoryFactory>();
+        }
+
+        private IRegistoryPatientService GetRegitoryPatientService()
+        {
+            return _serviceProvider.GetRequiredService<IRegistoryPatientService>();
+        }
+
         private async void Test()
         {
             var pat_count = _patientService.Patients.Count();
