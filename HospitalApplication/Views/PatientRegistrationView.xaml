@@ -11,19 +11,97 @@
              d:DataContext="{d:DesignInstance {x:Type vm:PatientRegistrationViewModel}, IsDesignTimeCreatable=True}"
              >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Регистрация пациента" Grid.Row="0" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0"
+        <TextBlock Text="Регистрация пациента" Grid.Row="0" FontSize="32" 
+                   FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
         
+        <Separator Height="1" Grid.Row="1" Background="#dae2ea" Margin="0 -1 0 10"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Пациент: " Grid.Column="0" Grid.Row="0" FontSize="26" 
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center"
+                       Margin="20"/>
+            <ComboBox Grid.Column="1" 
+                      Grid.Row="0" 
+                      Margin="20"
+                      Height="26"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding Patients}"
+                      DisplayMemberPath="FullName"
+                      SelectedItem="{Binding SelectedPatient}"/>
+
+            <TextBlock Text="Дата приема: " Grid.Column="0" Grid.Row="1" FontSize="26" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"
+                        Margin="20"/>
+            <DatePicker Grid.Row="1" 
+                        Grid.Column="1"
+                        Height="26"
+                        Width="150"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Margin="20"
+                        SelectedDate="{Binding AppointmentDate}"/>
+
+            <TextBlock Text="Доктор: " Grid.Column="0" Grid.Row="3" FontSize="26" 
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center"
+                       Margin="20"/>
+            <ComboBox Grid.Column="1" 
+                      Grid.Row="3" 
+                      Margin="20"
+                      Height="26"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding Doctors}"
+                      SelectedItem="{Binding SelectedDoctor}"
+                      DisplayMemberPath="FullName"/>
+
+            <TextBlock Text="Больница: " Grid.Column="0" Grid.Row="4" FontSize="26" 
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center"
+                       Margin="20"/>
+            <ComboBox Grid.Column="1" 
+                      Grid.Row="4" 
+                      Margin="20"
+                      Height="26"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"/>
+
+            <StackPanel Orientation="Horizontal" 
+                        Grid.Row="5" Grid.ColumnSpan="2" 
+                        HorizontalAlignment="Center"
+                        Margin="5">
+                <Button Style="{StaticResource addButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Kind="AccountEdit" 
+                                               VerticalAlignment="Center" 
+                                               Width="11"
+                                               Margin="0 1 8 0"/>
+                        <TextBlock Text="Записать"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
