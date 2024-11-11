@@ -1,9 +1,11 @@
 ﻿using Hospital.DAL.Entityes;
 using Hospital.Interfaces;
 using HospitalApplication.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HospitalApplication.Services
@@ -11,12 +13,23 @@ namespace HospitalApplication.Services
     class RegistoryPatientService : IRegistoryPatientService
     {
         private readonly IRepository<Patient> _patients;
-        public RegistoryPatientService(IRepository<Patient> patients)
+        private readonly IRepository<Doctor> _doctors;
+
+        public RegistoryPatientService(IDbRepositoryFactory dbRepositoryFactory)
         {
-            _patients = patients;
+            _patients = dbRepositoryFactory.CreateRepository<Patient>();
+            _doctors = dbRepositoryFactory.CreateRepository<Doctor>();
         }
 
-        public IEnumerable<Patient> Patients => _patients.Items;
+        public async Task<IEnumerable<Patient>> GetPatientsAsync()
+        {
+            return await _patients.Items.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Doctor>> GetDoctorsAsync()
+        {
+            return await _doctors.Items.ToListAsync();
+        }
 
         public async Task<Patient> AddPatient(string secondName, 
             string firstName,

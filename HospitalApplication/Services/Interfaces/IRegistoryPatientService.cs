@@ -14,6 +14,8 @@ namespace HospitalApplication.Services.Interfaces
             string adress,
             int numberPhone);
 
-        IEnumerable<Patient> Patients { get; }
+        Task<IEnumerable<Patient>> GetPatientsAsync();
+
+        Task<IEnumerable<Doctor>> GetDoctorsAsync();
     }
 }
