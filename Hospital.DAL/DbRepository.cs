@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Hospital.DAL.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using Hospital.DAL.Entityes;
-using System.ComponentModel.DataAnnotations;
 
 namespace Hospital.DAL
 {
@@ -29,23 +27,46 @@ namespace Hospital.DAL
         public T Add(T item)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
-            _db.Entry(item).State = EntityState.Added;
+            using (var transaction = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    _db.Entry(item).State = EntityState.Added;
 
-            if(AutoSaveChanges)
-                _db.SaveChanges();
+                    if(AutoSaveChanges)
+                        _db.SaveChanges();
 
-            return item;
+                    return item;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
 
         public async Task<T> AddAsync(T item, CancellationToken Cancel = default)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
-            _db.Entry(item).State = EntityState.Added;
+            using (var transaction = await _db.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    _db.Entry(item).State = EntityState.Added;
 
-            if (AutoSaveChanges)
-                await _db.SaveChangesAsync().ConfigureAwait(false);
+                    if (AutoSaveChanges)
+                        await _db.SaveChangesAsync().ConfigureAwait(false);
 
-            return item;
+                    await transaction.CommitAsync();
+                    return item;
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }            
         }
 
         public T Get(int id) => Items.SingleOrDefault(item => item.Id == id);
