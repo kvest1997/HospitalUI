@@ -4,6 +4,7 @@ using HospitalApplication.Services.Interfaces;
 using HospitalUI.Infrastructure.Commands;
 using HospitalUI.ViewModels.Base;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
@@ -11,25 +12,29 @@ namespace HospitalApplication.ViewModels
 {
     internal class PatientsViewModel : ViewModel
     {
-        private IDbRepositoryFactory _dbRepositoryFactory;
         private IRegistoryPatientService _patientService;
-        private readonly IRepository<Patient> _patients;
+        private ObservableCollection<Patient> _patients;
 
-        public PatientsViewModel(IRegistoryPatientService patientService, IDbRepositoryFactory dbRepositoryFactory)
+        public PatientsViewModel(IRegistoryPatientService patientService)
         {
-            _dbRepositoryFactory = dbRepositoryFactory;
             _patientService = patientService;
-
-            _patients = _dbRepositoryFactory.CreateRepository<Patient>();
+            LoadPatientAsync();
         }
 
-
         #region Propertys
-        public IEnumerable<Patient> Patients => _patients.Items.ToList();
-
+        public ObservableCollection<Patient> Patients 
+        { 
+            get => _patients; 
+            set => Set(ref _patients, value); 
+        }
         #endregion
 
         #region Methods
+        private async void LoadPatientAsync()
+        {
+            Patients = new ObservableCollection<Patient>((await _patientService.GetPatientsAsync()));
+        }
+
         #endregion
 
         #region Commands
