@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace HospitalApplication.Services.Interfaces
 {
@@ -14,8 +15,16 @@ namespace HospitalApplication.Services.Interfaces
             string adress,
             int numberPhone);
 
+        Task<Appointment> RegisterPatient(int patientId, 
+            int hospitalId, 
+            int doctorId,
+            DateTime dateAppointment,
+            TimeSpan timeAppointment);
+
+
         Task<IEnumerable<Patient>> GetPatientsAsync();
 
         Task<IEnumerable<Doctor>> GetDoctorsAsync();
+        Task<IEnumerable<Hospitals>> GetHospitalsAsync();
     }
 }

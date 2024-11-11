@@ -86,13 +86,17 @@
                       Margin="20"
                       Height="26"
                       HorizontalAlignment="Left"
-                      VerticalAlignment="Center"/>
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding AllHospitals}"
+                      SelectedItem="{Binding SelectedHospital}"
+                      DisplayMemberPath="NumberHospital"/>
 
             <StackPanel Orientation="Horizontal" 
                         Grid.Row="5" Grid.ColumnSpan="2" 
                         HorizontalAlignment="Center"
                         Margin="5">
-                <Button Style="{StaticResource addButton}">
+                <Button Style="{StaticResource addButton}"
+                        Command="{Binding RegisterPatientCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="AccountEdit" 
                                                VerticalAlignment="Center" 

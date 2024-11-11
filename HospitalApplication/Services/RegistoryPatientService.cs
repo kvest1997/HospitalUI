@@ -14,11 +14,15 @@ namespace HospitalApplication.Services
     {
         private readonly IRepository<Patient> _patients;
         private readonly IRepository<Doctor> _doctors;
+        private readonly IRepository<Appointment> _appointments;
+        private readonly IRepository<Hospitals> _hospitals;
 
         public RegistoryPatientService(IDbRepositoryFactory dbRepositoryFactory)
         {
             _patients = dbRepositoryFactory.CreateRepository<Patient>();
             _doctors = dbRepositoryFactory.CreateRepository<Doctor>();
+            _appointments = dbRepositoryFactory.CreateRepository<Appointment>();
+            _hospitals = dbRepositoryFactory.CreateRepository<Hospitals>();
         }
 
         public async Task<IEnumerable<Patient>> GetPatientsAsync()
@@ -29,6 +33,29 @@ namespace HospitalApplication.Services
         public async Task<IEnumerable<Doctor>> GetDoctorsAsync()
         {
             return await _doctors.Items.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Hospitals>> GetHospitalsAsync()
+        {
+            return await _hospitals.Items.ToListAsync();
+        }
+
+        public async Task<Appointment> RegisterPatient(int patientId,
+            int hospitalId,
+            int doctorId,
+            DateTime dateAppointment,
+            TimeSpan timeAppointment)
+        {
+            var appointent = new Appointment
+            {
+                PatientId = patientId,
+                HospitalId = hospitalId,
+                DoctorId = doctorId,
+                DateAppointment = dateAppointment,
+                TimeAppointment = timeAppointment
+            };
+
+            return await _appointments.AddAsync(appointent);
         }
 
         public async Task<Patient> AddPatient(string secondName, 
