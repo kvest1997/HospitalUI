@@ -30,6 +30,7 @@ namespace HospitalApplication.ViewModels
         {
             _registoryPatientService = registoryPatientService;
             InitializeDateAsync();
+            _appointmentDate = _appointmentDate.AddDays(7);
         }
 
         #region Propertys

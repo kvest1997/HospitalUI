@@ -1,5 +1,6 @@
 ﻿using Hospital.DAL.Entityes;
 using Hospital.Interfaces;
+using HospitalApplication;
 using HospitalApplication.Services.Interfaces;
 using HospitalApplication.ViewModels;
 using HospitalUI.Infrastructure.Commands;
@@ -49,6 +50,19 @@ namespace HospitalUI.ViewModels
         public ICommand ShowPatientRegistrationViewCommand => _showPatientRegistrationViewCommand
             ??= new LambdaCommand(OnShowPatientRegistrationViewCommandExecuted, CanShowPatientRegistrationViewCommandExecte);
         #endregion
+
+        #region CloseCommand - Отображение регистрации пациента на приеме
+        private ICommand _closeCommand;
+        private bool CanCloseCommanddExecte(object p) => true;
+        private void OnCloseCommandExecuted(object p)
+        {
+            
+        }
+        public ICommand CloseCommand => _showPatientRegistrationViewCommand
+            ??= new LambdaCommand(OnCloseCommandExecuted, CanCloseCommanddExecte);
+        #endregion
+
+
 
         #endregion
 

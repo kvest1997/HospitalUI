@@ -90,6 +90,7 @@
                         </StackPanel>
 
                         <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom"
+                                Command="{Binding CloseCommand}"
                                 DockPanel.Dock="Bottom"
                                 Margin="15 0 15 20">
                             <StackPanel Orientation="Horizontal">
