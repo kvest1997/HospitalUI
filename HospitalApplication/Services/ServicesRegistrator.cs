@@ -10,6 +10,7 @@ namespace HospitalApplication.Services
         public static IServiceCollection AddServices(this IServiceCollection services) => services
             .AddTransient<IRegistoryPatientService, RegistoryPatientService>()
             .AddScoped<IDbRepositoryFactory, DbRepositoryFactory>()
+            .AddTransient<IUserDialog, UserDialogService>()
             ;
     }
 }

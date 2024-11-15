@@ -5,16 +5,26 @@ using HospitalApplication.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
 using System.Windows;
 
 
 namespace HospitalApplication
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        public static Window ActiveWindow => 
+            Application.Current.Windows
+            .OfType<Window>()
+            .FirstOrDefault(w => w.IsActive);
+
+        public static Window FocuseWindow =>
+            Application.Current.Windows
+            .OfType<Window>()
+            .FirstOrDefault(w => w.IsFocused);
+
+        public static Window CurrentWindow => FocuseWindow ?? ActiveWindow;
+
         private static IHost? __Host;
         public static IHost Host => __Host 
             ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).Build();

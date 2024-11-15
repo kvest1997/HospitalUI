@@ -14,10 +14,12 @@ namespace HospitalApplication.ViewModels
     {
         private IRegistoryPatientService _patientService;
         private ObservableCollection<Patient> _patients;
+        private IUserDialog _userDialog;
 
-        public PatientsViewModel(IRegistoryPatientService patientService)
+        public PatientsViewModel(IRegistoryPatientService patientService, IUserDialog userDialog)
         {
             _patientService = patientService;
+            _userDialog = userDialog;
             LoadPatientAsync();
         }
 
@@ -44,7 +46,9 @@ namespace HospitalApplication.ViewModels
         private bool CanCreatePatientCommandExecte(object p) => true;
         private void OnCreatePatientCommandExecuted(object p)
         {
-            
+            var newPatient = new Patient();
+
+            if (!_userDialog.Edit(newPatient)) return;
         }
         public ICommand CreatePatientCommand => _сreatePatientCommand
             ??= new LambdaCommand(OnCreatePatientCommandExecuted, CanCreatePatientCommandExecte);

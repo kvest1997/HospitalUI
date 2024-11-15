@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HospitalApplication.Views"
         xmlns:vm="clr-namespace:HospitalApplication.ViewModels"
         mc:Ignorable="d"
-        Title="Добавить пациент" Height="380" Width="400"
+        Title="Добавить пациент" Height="420" Width="400"
         d:DataContext="{d:DesignInstance vm:AddPatientViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -57,7 +57,8 @@
 
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2">
             <Button Content="Добавить" Style="{StaticResource addButton}"
-                    Command="{Binding AddPatientCommand}"
+                    Command="{StaticResource DialogResultCommand}"
+                    CommandParameter="True"
                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
 

@@ -1,14 +1,9 @@
-﻿using Hospital.DAL.Entityes;
-using Hospital.Interfaces;
-using HospitalApplication;
-using HospitalApplication.Services.Interfaces;
+﻿using HospitalApplication.Services.Interfaces;
 using HospitalApplication.ViewModels;
 using HospitalUI.Infrastructure.Commands;
 using HospitalUI.ViewModels.Base;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 
 
@@ -18,6 +13,7 @@ namespace HospitalUI.ViewModels
     {        
         private readonly IServiceProvider _serviceProvider;
         private readonly IRegistoryPatientService _patientService;
+        private readonly IUserDialog _userDialog;
 
         private ViewModel _currentViewModel;
 
@@ -25,6 +21,7 @@ namespace HospitalUI.ViewModels
         {
             _serviceProvider = serviceProvider;
             _patientService = GetRegitoryPatientService();
+            _userDialog = GetUserDialogService();
         }
 
         #region Commands
@@ -34,7 +31,7 @@ namespace HospitalUI.ViewModels
         private bool CanOpenPatientsGridCommandExecte(object p) => true;
         private void OnOpenPatientsGridCommandExecuted(object p) 
         {
-            CurrentViewModel = new PatientsViewModel(_patientService);
+            CurrentViewModel = new PatientsViewModel(_patientService, _userDialog);
         }
         public ICommand OpenPatientsGridCommand => _openPatientsGridCommand
             ??= new LambdaCommand(OnOpenPatientsGridCommandExecuted, CanOpenPatientsGridCommandExecte);
@@ -82,6 +79,11 @@ namespace HospitalUI.ViewModels
         private IRegistoryPatientService GetRegitoryPatientService()
         {
             return _serviceProvider.GetRequiredService<IRegistoryPatientService>();
+        }
+
+        private IUserDialog GetUserDialogService()
+        {
+            return _serviceProvider.GetRequiredService<IUserDialog>();
         }
         #endregion
     }
