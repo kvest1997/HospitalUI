@@ -77,7 +77,26 @@ namespace Hospital.DAL
 
         public void Remove(int id)
         {
-            _db.Remove(new T { Id = id });
+            using (var transaction = _db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var itemRemove = _Set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
+
+                    _db.Remove(itemRemove);
+
+                    if (AutoSaveChanges)
+                        _db.SaveChanges();
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+
 
             if (AutoSaveChanges)
                  _db.SaveChanges();
@@ -85,10 +104,25 @@ namespace Hospital.DAL
 
         public async Task RemoveAsync(int id, CancellationToken Cancel = default)
         {
-            _db.Remove(new T { Id = id });
+            using (var transaction = await _db.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var itemRemove = _Set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
 
-            if (AutoSaveChanges)
-                await _db.SaveChangesAsync().ConfigureAwait(false);
+                    _db.Remove(itemRemove);
+
+                    if (AutoSaveChanges)
+                        await _db.SaveChangesAsync().ConfigureAwait(false);
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
         }
 
         public void Update(T item)
@@ -100,7 +134,7 @@ namespace Hospital.DAL
                 _db.SaveChanges();
         }
 
-        public async Task UppdateAsync(T item, CancellationToken Cancel = default)
+        public async Task UpdateAsync(T item, CancellationToken Cancel = default)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
             using (var transaction = await _db.Database.BeginTransactionAsync())

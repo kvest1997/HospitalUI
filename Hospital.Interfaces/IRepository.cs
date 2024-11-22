@@ -16,7 +16,7 @@ namespace Hospital.Interfaces
         Task<T> AddAsync(T item, CancellationToken Cancel = default);
         
         void Update(T item);
-        Task UppdateAsync(T item, CancellationToken Cancel = default);
+        Task UpdateAsync(T item, CancellationToken Cancel = default);
 
         void Remove(int id);
         Task RemoveAsync(int id, CancellationToken Cancel = default);
