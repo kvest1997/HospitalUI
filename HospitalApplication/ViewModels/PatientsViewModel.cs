@@ -24,6 +24,14 @@ namespace HospitalApplication.ViewModels
         }
 
         #region Propertys
+
+        private Patient _selectedPatient;
+        public Patient SelectedPatient
+        {
+            get => _selectedPatient;
+            set => Set(ref _selectedPatient, value);
+        }
+
         public ObservableCollection<Patient> Patients 
         { 
             get => _patients; 
@@ -54,6 +62,23 @@ namespace HospitalApplication.ViewModels
         }
         public ICommand CreatePatientCommand => _сreatePatientCommand
             ??= new LambdaCommand(OnCreatePatientCommandExecuted, CanCreatePatientCommandExecte);
+        #endregion
+
+        #region EditPatientCommand - Создание нового пациента
+        private ICommand _editPatientCommand;
+        private bool CanEditPatientCommandExecte(object p) => true;
+        private async void OnEditPatientCommandExecuted(object p)
+        {
+            var editPatient = SelectedPatient;
+
+            if (!_userDialog.Add(editPatient)) return;
+
+            await _patientService.UpdatePatient(editPatient);
+
+            Patients = new ObservableCollection<Patient>(await _patientService.GetPatientsAsync());
+        }
+        public ICommand EditPatientCommand => _editPatientCommand
+            ??= new LambdaCommand(OnEditPatientCommandExecuted, CanEditPatientCommandExecte);
         #endregion
 
         #endregion

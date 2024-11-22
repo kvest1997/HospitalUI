@@ -59,7 +59,8 @@
                           ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                           RowStyle="{DynamicResource DataGridRowStyle1}" 
                           Grid.Row="5" x:Name="membersDataGrid"
-                          ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}">
+                          ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedPatient, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
@@ -101,7 +102,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridEditButton}">
+                                <Button Style="{StaticResource gridEditButton}"
+                                        Command="{Binding DataContext.EditPatientCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
                                     <Icon:PackIconMaterial Kind="PencilOutline" 
                                                                    Style="{StaticResource gridButtonIcon}"/>
                                 </Button>

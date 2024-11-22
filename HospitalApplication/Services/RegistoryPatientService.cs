@@ -62,5 +62,10 @@ namespace HospitalApplication.Services
         {
             return await _patients.AddAsync(patient);
         }
+
+        public async Task UpdatePatient(Patient patient)
+        {
+            await _patients.UppdateAsync(patient);
+        }
     }
 }

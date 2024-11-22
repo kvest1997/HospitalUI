@@ -10,6 +10,8 @@ namespace HospitalApplication.Services.Interfaces
     {
         Task<Patient> AddPatient(Patient patient);
 
+        Task UpdatePatient(Patient patient);
+
         Task<Appointment> RegisterPatient(int patientId, 
             int hospitalId, 
             int doctorId,

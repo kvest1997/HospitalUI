@@ -1,13 +1,19 @@
 ﻿using Hospital.DAL.Entityes;
 using HospitalUI.ViewModels.Base;
+using System;
 
 namespace HospitalApplication.ViewModels
 {
     class AddPatientViewModel : ViewModel
     {
-        public AddPatientViewModel()
+        public AddPatientViewModel(Patient patient)
         {
-
+            SecondName = patient.SecondName;
+            FirstName = patient.FirstName;
+            LastName = patient.LastName;
+            BDay = patient.Birthday.ToShortDateString();
+            Adress = patient.Adress;
+            NumberPhone = Convert.ToString(patient.NumberPhone);
         }
 
         private string _secondName;

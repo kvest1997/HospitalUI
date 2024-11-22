@@ -10,7 +10,7 @@ namespace HospitalApplication.Services
     {
         public bool Add(Patient patient)
         {
-            var patient_editor_model = new AddPatientViewModel();
+            var patient_editor_model = new AddPatientViewModel(patient);
             var patient_editor_window = new AddPatientWindow
             {
                 DataContext = patient_editor_model
@@ -27,5 +27,7 @@ namespace HospitalApplication.Services
 
             return true;
         }
+
+
     }
 }
