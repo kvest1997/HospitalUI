@@ -103,10 +103,23 @@ namespace Hospital.DAL
         public async Task UppdateAsync(T item, CancellationToken Cancel = default)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
-            _db.Entry(item).State = EntityState.Modified;
+            using (var transaction = await _db.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    _db.Entry(item).State = EntityState.Modified;
 
-            if (AutoSaveChanges)
-                await _db.SaveChangesAsync().ConfigureAwait(false);
+                    if (AutoSaveChanges)
+                        await _db.SaveChangesAsync().ConfigureAwait(false);
+
+                    await transaction.CommitAsync();
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
         }
     }
 
