@@ -3,6 +3,7 @@ using HospitalApplication.Services.Interfaces;
 using HospitalApplication.ViewModels;
 using HospitalApplication.Views;
 using System;
+using System.Windows;
 
 namespace HospitalApplication.Services
 {
@@ -28,6 +29,11 @@ namespace HospitalApplication.Services
             return true;
         }
 
-
+        public bool ConfirmWarning(string Warning, string Caption) => MessageBox
+           .Show(
+                Warning, Caption,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning)
+                == MessageBoxResult.Yes;
     }
 }

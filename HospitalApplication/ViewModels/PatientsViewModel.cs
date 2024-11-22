@@ -64,7 +64,7 @@ namespace HospitalApplication.ViewModels
             ??= new LambdaCommand(OnCreatePatientCommandExecuted, CanCreatePatientCommandExecte);
         #endregion
 
-        #region EditPatientCommand - Создание нового пациента
+        #region EditPatientCommand - редактирование пациента
         private ICommand _editPatientCommand;
         private bool CanEditPatientCommandExecte(object p) => true;
         private async void OnEditPatientCommandExecuted(object p)
@@ -80,6 +80,27 @@ namespace HospitalApplication.ViewModels
         public ICommand EditPatientCommand => _editPatientCommand
             ??= new LambdaCommand(OnEditPatientCommandExecuted, CanEditPatientCommandExecte);
         #endregion
+
+        #region RemovePatientCommand - Удаление пациента
+        private ICommand _removePatientCommand;
+        private bool CanRemovePatientCommandExecte(object p) => true;
+        private async void OnRemovePatientCommandExecuted(object p)
+        {
+            var removePatient = SelectedPatient;
+
+
+            if (!_userDialog.ConfirmWarning($"Вы хотите пациента {removePatient.FullName}?", "Удаление пациента")) return;
+
+            await _patientService.RemovePatient(removePatient.Id);
+            Patients.Remove(removePatient);
+
+            if (ReferenceEquals(SelectedPatient, removePatient))
+                SelectedPatient = null;
+        }
+        public ICommand RemovePatientCommand => _removePatientCommand
+            ??= new LambdaCommand(OnRemovePatientCommandExecuted, CanRemovePatientCommandExecte);
+        #endregion
+
 
         #endregion
     }

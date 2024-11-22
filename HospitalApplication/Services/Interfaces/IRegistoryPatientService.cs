@@ -18,6 +18,7 @@ namespace HospitalApplication.Services.Interfaces
             DateTime dateAppointment,
             TimeSpan timeAppointment);
 
+        Task RemovePatient(int id);
 
         Task<IEnumerable<Patient>> GetPatientsAsync();
 

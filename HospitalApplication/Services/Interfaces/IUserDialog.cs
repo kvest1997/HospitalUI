@@ -8,5 +8,7 @@ namespace HospitalApplication.Services.Interfaces
     internal interface IUserDialog
     {
         bool Add(Patient patient);
+
+        bool ConfirmWarning(string Warning, string Caption);
     }
 }

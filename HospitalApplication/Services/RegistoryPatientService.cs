@@ -65,7 +65,12 @@ namespace HospitalApplication.Services
 
         public async Task UpdatePatient(Patient patient)
         {
-            await _patients.UppdateAsync(patient);
+            await _patients.UpdateAsync(patient);
+        }
+
+        public async Task RemovePatient(int id)
+        {
+            await _patients.RemoveAsync(id);
         }
     }
 }

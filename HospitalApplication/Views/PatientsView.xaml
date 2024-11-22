@@ -108,7 +108,9 @@
                                                                    Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
 
-                                <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0">
+                                <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0"
+                                        Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
                                     <Icon:PackIconMaterial Kind="DeleteOutline" 
                                                                    Style="{StaticResource gridButtonIcon}"/>
                                 </Button>

@@ -81,7 +81,7 @@
                             </Button>
 
                             <Button Style="{StaticResource menuButton}" Foreground="White"
-                                    Command="{Binding ShowPatientRegistrationViewCommand, UpdateSourceTrigger=PropertyChanged}">
+                                   >
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="Hail" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Принять пациента"/>
