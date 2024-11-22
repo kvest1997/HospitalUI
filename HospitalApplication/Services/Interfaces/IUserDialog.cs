@@ -7,6 +7,6 @@ namespace HospitalApplication.Services.Interfaces
 {
     internal interface IUserDialog
     {
-        bool Edit(Patient patient);
+        bool Add(Patient patient);
     }
 }

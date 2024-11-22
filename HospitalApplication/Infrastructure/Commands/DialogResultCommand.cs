@@ -19,7 +19,7 @@ namespace HospitalApplication.Infrastructure.Commands
             var dialog_result = DialogResult;
 
             if (parameter != null)
-                dialog_result = (bool?)Convert.ChangeType(parameter, typeof(bool?));
+                dialog_result = Convert.ToBoolean(parameter);
 
             window.DialogResult = dialog_result;
             window.Close();

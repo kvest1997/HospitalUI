@@ -58,23 +58,8 @@ namespace HospitalApplication.Services
             return await _appointments.AddAsync(appointent);
         }
 
-        public async Task<Patient> AddPatient(string secondName, 
-            string firstName,
-            string lastName,
-            DateTime bDay,
-            string adress,
-            int numberPhone)
+        public async Task<Patient> AddPatient(Patient patient)
         {
-            var patient = new Patient
-            {
-                SecondName = secondName,
-                FirstName = firstName,
-                LastName = lastName,
-                Birthday = bDay,
-                Adress = adress,
-                NumberPhone = numberPhone
-            };
-
             return await _patients.AddAsync(patient);
         }
     }

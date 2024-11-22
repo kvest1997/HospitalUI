@@ -44,11 +44,13 @@ namespace HospitalApplication.ViewModels
         #region CreatePatientCommand - Создание нового пациента
         private ICommand _сreatePatientCommand;
         private bool CanCreatePatientCommandExecte(object p) => true;
-        private void OnCreatePatientCommandExecuted(object p)
+        private async void OnCreatePatientCommandExecuted(object p)
         {
             var newPatient = new Patient();
 
-            if (!_userDialog.Edit(newPatient)) return;
+            if (!_userDialog.Add(newPatient)) return;
+
+            Patients.Add(await _patientService.AddPatient(newPatient));
         }
         public ICommand CreatePatientCommand => _сreatePatientCommand
             ??= new LambdaCommand(OnCreatePatientCommandExecuted, CanCreatePatientCommandExecte);

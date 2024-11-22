@@ -8,12 +8,7 @@ namespace HospitalApplication.Services.Interfaces
 {
     interface IRegistoryPatientService
     {
-        Task<Patient> AddPatient(string secondName,
-            string firstName,
-            string lastName,
-            DateTime bDay,
-            string adress,
-            int numberPhone);
+        Task<Patient> AddPatient(Patient patient);
 
         Task<Appointment> RegisterPatient(int patientId, 
             int hospitalId, 
