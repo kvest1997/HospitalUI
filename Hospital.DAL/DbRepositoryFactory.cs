@@ -1,4 +1,5 @@
 ﻿using Hospital.DAL.Context;
+using Hospital.DAL.Entityes;
 using Hospital.DAL.Entityes.Base;
 using Hospital.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,10 +16,6 @@ namespace Hospital.DAL
             _serviceProvider = serviceProvider;
         }
 
-        IRepository<T> IDbRepositoryFactory.CreateRepository<T>()
-        {
-            var dbContext = _serviceProvider.GetRequiredService<DataContextBase>();
-            return new DbRepository<T>(dbContext);
-        }
+        IRepository<T> IDbRepositoryFactory.CreateRepository<T>() => _serviceProvider.GetRequiredService<IRepository<T>>();
     }
 }
