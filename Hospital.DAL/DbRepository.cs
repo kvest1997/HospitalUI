@@ -220,7 +220,9 @@ namespace Hospital.DAL
         public override IQueryable<Appointment> Items =>
             base.Items
             .Include(item => item.Hospital)
-            .Include(item => item.Doctor);
+            .Include(item => item.Doctor)
+            .Include(item => item.Patient);
+            
 
         public AppointmentsRepository(DataContextBase db) : base(db)
         {
