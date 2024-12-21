@@ -67,7 +67,8 @@
                           ItemsSource="{Binding Patients, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedPatient, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
+                <DataGridCheckBoxColumn CanUserResize="False" 
+                                        Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
                             <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
@@ -100,8 +101,7 @@
                 <DataGridTextColumn Header="День рождения" 
                                             IsReadOnly="True" 
                                             Width="*"
-                                            Binding="{Binding Birthday}"
-                                    />
+                                            Binding="{Binding Birthday}"/>
 
                 <DataGridTemplateColumn Header="Действия" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>

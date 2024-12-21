@@ -37,11 +37,14 @@
             <DatePicker/>
             <Button Content="Найти записи" Style="{StaticResource gridEditButton}" Margin="10 0 0 0"/>
         </StackPanel>
+
         <DataGrid Style="{DynamicResource DataGridStyle1}"
                   CellStyle="{DynamicResource DataGridCellStyle1}"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                  RowStyle="{DynamicResource DataGridRowStyle1}"
                   Grid.Row="3"
-                  Margin="-25 10 0 0">
+                  ItemsSource="{Binding Appointments}"
+                  SelectedItem="{Binding SelectedAppointment}">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
@@ -51,31 +54,31 @@
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
 
-                <DataGridTemplateColumn Header="ФИО" IsReadOnly="True" Width="auto">
+                <DataGridTemplateColumn Header="Пациент" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="Red">
-                                    <TextBlock Text="{Binding SecondName}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
+                                    <TextBlock Text="{Binding Patient.SecondName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
                                 </Border>
-                                <TextBlock Text="{Binding FullName}" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Patient.FullName, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Адрес" 
+                <DataGridTextColumn Header="Доктор" 
                             IsReadOnly="True" 
                             Width="*"
-                            Binding="{Binding Adress}"/>
-                <DataGridTextColumn Header="Номер телефона" 
+                            Binding="{Binding Doctor.FullName, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Больница" 
                             IsReadOnly="True" 
                             Width="*"
-                            Binding="{Binding NumberPhone}"/>
-                <DataGridTextColumn Header="День рождения" 
+                            Binding="{Binding Hospital.NumberHospital, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Дата приема" 
                             IsReadOnly="True" 
                             Width="*"
-                            Binding="{Binding Birthday}"/>
+                            Binding="{Binding DateAppointment.Date, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <DataGridTemplateColumn Header="Действия" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
