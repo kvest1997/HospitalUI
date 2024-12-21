@@ -14,6 +14,7 @@ namespace HospitalUI.ViewModels
         private readonly IServiceProvider _serviceProvider;
         private readonly IRegistoryPatientService _patientService;
         private readonly IUserDialog _userDialog;
+        private readonly IAccepPatientService _accepPatientService;
 
         private ViewModel _currentViewModel;
 
@@ -22,6 +23,7 @@ namespace HospitalUI.ViewModels
             _serviceProvider = serviceProvider;
             _patientService = GetRegitoryPatientService();
             _userDialog = GetUserDialogService();
+            _accepPatientService = GetAccepPatientService();
         }
 
         #region Commands
@@ -65,7 +67,7 @@ namespace HospitalUI.ViewModels
         private bool CanShowAcceptPatientViewCommandExecte(object p) => true;
         private void OnShowAcceptPatientViewCommandExecuted(object p)
         {
-            CurrentViewModel = new AcceptPatientViewModel();
+            CurrentViewModel = new AcceptPatientViewModel(_accepPatientService);
         }
         public ICommand ShowAcceptPatientViewCommand => _showAcceptPatientViewCommand
             ??= new LambdaCommand(OnShowAcceptPatientViewCommandExecuted, CanShowAcceptPatientViewCommandExecte);
@@ -86,15 +88,11 @@ namespace HospitalUI.ViewModels
 
         #region Methods
 
-        private IRegistoryPatientService GetRegitoryPatientService()
-        {
-            return _serviceProvider.GetRequiredService<IRegistoryPatientService>();
-        }
+        private IAccepPatientService GetAccepPatientService() => _serviceProvider.GetRequiredService<IAccepPatientService>();
 
-        private IUserDialog GetUserDialogService()
-        {
-            return _serviceProvider.GetRequiredService<IUserDialog>();
-        }
+        private IRegistoryPatientService GetRegitoryPatientService() => _serviceProvider.GetRequiredService<IRegistoryPatientService>();
+
+        private IUserDialog GetUserDialogService() => _serviceProvider.GetRequiredService<IUserDialog>();
         #endregion
     }
 }
