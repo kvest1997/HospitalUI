@@ -80,8 +80,9 @@
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource menuButton}" Foreground="White"
-                                   >
+                            <Button Style="{StaticResource menuButton}" 
+                                    Foreground="White"
+                                    Command="{Binding ShowAcceptPatientViewCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="Hail" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Принять пациента"/>

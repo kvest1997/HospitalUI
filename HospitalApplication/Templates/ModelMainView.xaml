@@ -9,4 +9,8 @@
     <DataTemplate DataType="{x:Type vm:PatientsViewModel}">
         <view:PatientsView DataContext="{Binding}"/>
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:AcceptPatientViewModel}">
+        <view:AcceptPatientView DataContext="{Binding}"/>
+    </DataTemplate>
 </ResourceDictionary>

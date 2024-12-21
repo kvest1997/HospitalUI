@@ -48,18 +48,28 @@ namespace HospitalUI.ViewModels
             ??= new LambdaCommand(OnShowPatientRegistrationViewCommandExecuted, CanShowPatientRegistrationViewCommandExecte);
         #endregion
 
-        #region CloseCommand - Отображение регистрации пациента на приеме
+        #region CloseCommand - Закрытие приложения
         private ICommand _closeCommand;
-        private bool CanCloseCommanddExecte(object p) => true;
+        private bool CanCloseCommandExecte(object p) => true;
         private void OnCloseCommandExecuted(object p)
         {
-            
+            CloseApplicationCommand closeApplicationCommand = new CloseApplicationCommand();
+            closeApplicationCommand.Execute(p);
         }
-        public ICommand CloseCommand => _showPatientRegistrationViewCommand
-            ??= new LambdaCommand(OnCloseCommandExecuted, CanCloseCommanddExecte);
+        public ICommand CloseCommand => _closeCommand
+            ??= new LambdaCommand(OnCloseCommandExecuted, CanCloseCommandExecte);
         #endregion
 
-
+        #region ShowAcceptPatientViewCommand - Отображать записи пациентов
+        private ICommand _showAcceptPatientViewCommand;
+        private bool CanShowAcceptPatientViewCommandExecte(object p) => true;
+        private void OnShowAcceptPatientViewCommandExecuted(object p)
+        {
+            CurrentViewModel = new AcceptPatientViewModel();
+        }
+        public ICommand ShowAcceptPatientViewCommand => _showAcceptPatientViewCommand
+            ??= new LambdaCommand(OnShowAcceptPatientViewCommandExecuted, CanShowAcceptPatientViewCommandExecte);
+        #endregion
 
         #endregion
 
