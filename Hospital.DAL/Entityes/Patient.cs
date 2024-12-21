@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace Hospital.DAL.Entityes
 {
+    /// <summary>
+    /// Модель пациента
+    /// </summary>
     public partial class Patient : Entity
     {
         public Patient()

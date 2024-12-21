@@ -1,5 +1,4 @@
 ﻿using Hospital.DAL.Entityes.Base;
-using Hospital.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Hospital.DAL.Entityes
 {
+    /// <summary>
+    /// Модель записи на прием
+    /// </summary>
     public partial class Appointment : Entity
     {
         public Appointment()
