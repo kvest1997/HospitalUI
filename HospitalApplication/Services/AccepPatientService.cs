@@ -20,5 +20,10 @@ namespace HospitalApplication.Services
         }
 
         public async Task<IEnumerable<Appointment>> GetAppointmentsAsync() => await _appointments.Items.ToListAsync();
+
+        public async Task<IEnumerable<Appointment>> GetAppointmentsFromToDateAsync(DateTime fromDate, DateTime toDate) => 
+            await _appointments.Items
+            .Where(item => item.DateAppointment >= fromDate && 
+                    item.DateAppointment <= toDate).ToListAsync();
     }
 }

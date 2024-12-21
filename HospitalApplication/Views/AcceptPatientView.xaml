@@ -30,12 +30,15 @@
             <TextBlock Text="С"  
                        VerticalAlignment="Center"
                        Margin="5 0 5 0"/>
-            <DatePicker/>
+            <DatePicker SelectedDate="{Binding FromDate}"/>
             <TextBlock Text="По"
                        VerticalAlignment="Center"
                        Margin="5 0 5 0"/>
-            <DatePicker/>
-            <Button Content="Найти записи" Style="{StaticResource gridEditButton}" Margin="10 0 0 0"/>
+            <DatePicker SelectedDate="{Binding ToDate}"/>
+            <Button Content="Найти записи" Style="{StaticResource gridEditButton}" Margin="10 0 0 0"
+                    Command="{Binding FindAppointmentsToDateCommand}"/>
+            <Button Content="Все записи" Style="{StaticResource gridEditButton}" Margin="10 0 0 0"
+                    Command="{Binding GetAllAppointmentsCommand}"/>
         </StackPanel>
 
         <DataGrid Style="{DynamicResource DataGridStyle1}"

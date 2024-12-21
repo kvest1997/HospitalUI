@@ -9,5 +9,6 @@ namespace HospitalApplication.Services.Interfaces
     interface IAccepPatientService
     {
         Task<IEnumerable<Appointment>> GetAppointmentsAsync();
+        Task<IEnumerable<Appointment>> GetAppointmentsFromToDateAsync(DateTime fromDate, DateTime toDate);
     }
 }
