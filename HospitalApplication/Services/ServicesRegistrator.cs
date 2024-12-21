@@ -11,6 +11,7 @@ namespace HospitalApplication.Services
             .AddTransient<IRegistoryPatientService, RegistoryPatientService>()
             .AddScoped<IDbRepositoryFactory, DbRepositoryFactory>()
             .AddTransient<IUserDialog, UserDialogService>()
+            .AddTransient<IAccepPatientService, AccepPatientService>()
             ;
     }
 }

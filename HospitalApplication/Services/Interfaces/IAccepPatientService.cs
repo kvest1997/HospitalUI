@@ -8,6 +8,6 @@ namespace HospitalApplication.Services.Interfaces
 {
     interface IAccepPatientService
     {
-        Task<Appointment> GetAppointments();
+        Task<IEnumerable<Appointment>> GetAppointmentsAsync();
     }
 }
