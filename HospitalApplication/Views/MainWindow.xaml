@@ -35,23 +35,23 @@
                 </Grid.RowDefinitions>
 
                 <!--Menu Icon-->
-                <Button Margin=" 20 28 0 35"
+                <!--<Button Margin=" 20 28 0 35"
                     Style="{StaticResource topButton}">
                     <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
-                </Button>
+                </Button>-->
 
                 <Border Grid.Row="1" 
                         Background="#623ed0" CornerRadius="0 50 0 30">
                     <DockPanel>
                         <!--Menu Logo-->
-                        <Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100"
+                        <!--<Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100"
                                 DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
                             <Ellipse>
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{x:Null}"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                        </Border>
+                        </Border>-->
                         
                         <!--Menu Titles-->
                         <TextBlock Text="Hospital UI" Foreground="White" FontSize="22" FontWeight="SemiBold"
@@ -114,7 +114,7 @@
                 </Grid.RowDefinitions>
                 
                 <!--Search TextBox-->
-                <Grid Width="300" HorizontalAlignment="Left">
+                <!--<Grid Width="300" HorizontalAlignment="Left">
                     <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
                                Panel.ZIndex="1" Text="Поиск..."
                                Visibility="{Binding ElementName=txtSearch,Path=Text.IsEmpty,Converter={StaticResource BoolToVis}}"/>
@@ -122,10 +122,10 @@
 
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center"
                                            Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
-                </Grid>
+                </Grid>-->
                 
                 <!--Top Buttons-->
-                <Button Style="{StaticResource topButton}" Margin="0 0 20 0" Background="#dcdcdc"
+                <!--<Button Style="{StaticResource topButton}" Margin="0 0 20 0" Background="#dcdcdc"
                         HorizontalAlignment="Right">
                     <Icon:PackIconMaterial Kind="Cog"/>
                 </Button>
@@ -133,7 +133,7 @@
                 <Button Style="{StaticResource topButton}" Margin="0 0 55 0" 
                         HorizontalAlignment="Right">
                     <Icon:PackIconMaterial Kind="Bell"/>
-                </Button>
+                </Button>-->
                 
                 <!--Page Title-->
                 <UserControl Grid.Row="2" Margin="5" Content="{Binding CurrentViewModel}"/>
