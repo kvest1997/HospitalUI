@@ -3,6 +3,7 @@ using HospitalApplication.Services.Interfaces;
 using HospitalUI.Infrastructure.Commands;
 using HospitalUI.ViewModels.Base;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -14,6 +15,9 @@ namespace HospitalApplication.ViewModels
         private readonly IUserDialog _userDialog;
 
         private ObservableCollection<Appointment> _appointments;
+        private IEnumerable<Diagnosis> _diagnoses;
+        private IEnumerable<Analysis> _analyses;
+
         private Appointment _selectedAppointment;
 
         private DateTime _fromDate = DateTime.Now;
@@ -62,6 +66,8 @@ namespace HospitalApplication.ViewModels
         private async void InitializeDateAsync()
         {
             Appointments = new ObservableCollection<Appointment>(await _accepPatientService.GetAppointmentsFromToDateAsync(FromDate, ToDate));
+            _diagnoses = await _accepPatientService.GetDiagnosesAsync();
+            _analyses = await _accepPatientService.GetAnalysesAsync();
             FromDate = DateTime.Now;
             ToDate = ToDate.AddDays(7);
         }
@@ -96,7 +102,7 @@ namespace HospitalApplication.ViewModels
         private bool CanShowAppointmentPatientCommandExecte(object p) => true;
         private void OnShowAppointmentPatientCommandExecuted(object p)
         {
-            if (!_userDialog.OpenAppointment(SelectedAppointment)) return;
+            if (!_userDialog.OpenAppointment(SelectedAppointment, _diagnoses, _analyses)) return;
         }
 
         public ICommand ShowAppointmentPatientCommand => _showAppointmentPatientCommand

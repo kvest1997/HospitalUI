@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalApplication.Views"
         xmlns:model="clr-namespace:Hospital.DAL.Entityes;assembly=Hospital.DAL"
+        xmlns:dto="clr-namespace:HospitalApplication.Model"
         xmlns:vm="clr-namespace:HospitalApplication.ViewModels"        
         mc:Ignorable="d"
         Title="Просмотр записи" Height="450" Width="800"
@@ -14,28 +15,89 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Content="ФИО: " Grid.Row="0" Grid.Column="0"/>
-                <TextBox Text="{Binding FullName}" Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2"/>
+                <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                         Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2" TextWrapping="WrapWithOverflow"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="DoctorTemplate" DataType="{x:Type model:Doctor}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Content="ФИО: " Grid.Row="0" Grid.Column="0"/>
-                <TextBox Text="{Binding FullName}" Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2"/>
+                <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2"
+                         TextWrapping="WrapWithOverflow"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ExaminationResultTemplate" DataType="{x:Type model:ExaminationResult}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Диагноз: " Grid.Column="0" Grid.Row="0"/>
+                <ComboBox ItemsSource="{Binding DataContext.DiagnosesOptions, RelativeSource={RelativeSource AncestorType=Window} }" 
+                          SelectedValue="{Binding DiagnosesId}"
+                          Grid.Row="0" Grid.Column="1" Margin="5"
+                          DisplayMemberPath="DiagnosesName"/>
+
+                <Label Content="Назначенное лечение" Grid.Row="1" Grid.Column="0"/>
+                <TextBox Text="{Binding OutpatientTreatment}" Grid.Row="1" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
+
+                <Label Content="Дата больничного" Grid.Row="2" Grid.Column="0"/>
+                <DatePicker Text="{Binding DisabilityPeriod}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+                <Label Content="Диспансеризация" Grid.Row="3" Grid.Column="0"/>
+                <CheckBox Grid.Row="3" Grid.Column="1" Margin="5"/>
+
+                <Label Content="Доп. Записи" Grid.Row="4" Grid.Column="0"/>
+                <TextBox Text="{Binding Note}" Grid.Row="4" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
+
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="PrescribedTreatmentTemplate" DataType="{x:Type dto:PrescribedTreatmentDto}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Анализы" Grid.Row="0" Grid.Column="0"/>
+                <ComboBox ItemsSource="{Binding DataContext.Analyses, RelativeSource={RelativeSource AncestorType=Window}}" 
+                          SelectedValue="{Binding AnalysesId}"
+                          Grid.Row="0" Grid.Column="1" Margin="5"
+                          DisplayMemberPath="AnalysesName"/>
+
+                <Label Content="Лечение: " Grid.Row="1" Grid.Column="0"/>
+                <TextBox Text="{Binding Treatment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
+
+                <Label Content="Процедуры: " Grid.Row="2" Grid.Column="0"/>
+                <TextBox Text="{Binding Procedur, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -54,23 +116,41 @@
             Grid.Column="0" 
             Grid.Row="0"
             Header="Пациент">
-            <ContentControl ContentTemplate="{StaticResource PatientTemplate}"/>
+            <ContentControl ContentTemplate="{StaticResource PatientTemplate}"
+                            Content="{Binding Patient}"/>
         </GroupBox>
 
         <GroupBox
             Grid.Column="1"
             Grid.Row="0"
             Header="Доктор">
-            <ContentControl ContentTemplate="{StaticResource DoctorTemplate}"/>
+            <ContentControl ContentTemplate="{StaticResource DoctorTemplate}"
+                            Content="{Binding Doctor}"/>
         </GroupBox>
 
         <GroupBox Grid.Row="1"
-                  Grid.ColumnSpan="2"
-                  Header="Прием"/>
+            Grid.ColumnSpan="2"
+            Header="Прием">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ContentControl Grid.Row="0" 
+                                ContentTemplate="{StaticResource ExaminationResultTemplate}"
+                                Content="{Binding ExaminationResult}"/>
+                
+                <GroupBox Grid.Row="1" Header="Лечение">
+                    <ContentControl ContentTemplate="{StaticResource PrescribedTreatmentTemplate}"
+                                    Content="{Binding PrescribedTreatment}"/>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
         <Button 
             Grid.ColumnSpan="2" 
             Grid.Row="2" 
             Margin="10"
-            Content="Принять"/>
+            Content="Принять"
+            Command="{Binding SaveAppointmentCommand}"/>
     </Grid>
 </Window>

@@ -3,6 +3,7 @@ using HospitalApplication.Services.Interfaces;
 using HospitalApplication.ViewModels;
 using HospitalApplication.Views;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace HospitalApplication.Services
@@ -36,9 +37,9 @@ namespace HospitalApplication.Services
                 MessageBoxImage.Warning)
                 == MessageBoxResult.Yes;
 
-        public bool OpenAppointment(Appointment appointment)
+        public bool OpenAppointment(Appointment appointment, IEnumerable<Diagnosis> diagnoses, IEnumerable<Analysis> analyses)
         {
-            var appointment_model = new AppointmentViewModel(appointment);
+            var appointment_model = new AppointmentViewModel(appointment, diagnoses, analyses);
             var appointment_window = new AppointmentWindowView
             {
                 DataContext = appointment_model
