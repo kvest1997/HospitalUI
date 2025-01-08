@@ -35,5 +35,18 @@ namespace HospitalApplication.Services
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning)
                 == MessageBoxResult.Yes;
+
+        public bool OpenAppointment(Appointment appointment)
+        {
+            var appointment_model = new AppointmentViewModel(appointment);
+            var appointment_window = new AppointmentWindowView
+            {
+                DataContext = appointment_model
+            };
+
+            if (appointment_window.ShowDialog() != true) return false;
+
+            return true;
+        }
     }
 }

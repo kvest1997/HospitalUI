@@ -67,7 +67,7 @@ namespace HospitalUI.ViewModels
         private bool CanShowAcceptPatientViewCommandExecte(object p) => true;
         private void OnShowAcceptPatientViewCommandExecuted(object p)
         {
-            CurrentViewModel = new AcceptPatientViewModel(_accepPatientService);
+            CurrentViewModel = new AcceptPatientViewModel(_accepPatientService, _userDialog);
         }
         public ICommand ShowAcceptPatientViewCommand => _showAcceptPatientViewCommand
             ??= new LambdaCommand(OnShowAcceptPatientViewCommandExecuted, CanShowAcceptPatientViewCommandExecte);

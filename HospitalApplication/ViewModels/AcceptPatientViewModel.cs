@@ -11,6 +11,7 @@ namespace HospitalApplication.ViewModels
     internal class AcceptPatientViewModel : ViewModel
     {
         private readonly IAccepPatientService _accepPatientService;
+        private readonly IUserDialog _userDialog;
 
         private ObservableCollection<Appointment> _appointments;
         private Appointment _selectedAppointment;
@@ -18,9 +19,10 @@ namespace HospitalApplication.ViewModels
         private DateTime _fromDate = DateTime.Now;
         private DateTime _toDate = DateTime.Now;
 
-        public AcceptPatientViewModel(IAccepPatientService accepPatientService) 
+        public AcceptPatientViewModel(IAccepPatientService accepPatientService, IUserDialog userDialog) 
         {
             _accepPatientService = accepPatientService;
+            _userDialog = userDialog;
             InitializeDateAsync();
         }
 
@@ -87,6 +89,18 @@ namespace HospitalApplication.ViewModels
         }
         public ICommand GetAllAppointmentsCommand => _getAllAppointmentsCommand
             ??= new LambdaCommand(OnGetAllAppointmentsCommandExecuted, CanGetAllAppointmentsCommandExecte);
+        #endregion
+
+        #region ShowAppointmentPatient - Просмотр приема
+        private ICommand _showAppointmentPatientCommand;
+        private bool CanShowAppointmentPatientCommandExecte(object p) => true;
+        private void OnShowAppointmentPatientCommandExecuted(object p)
+        {
+            if (!_userDialog.OpenAppointment(SelectedAppointment)) return;
+        }
+
+        public ICommand ShowAppointmentPatientCommand => _showAppointmentPatientCommand
+            ??= new LambdaCommand(OnShowAppointmentPatientCommandExecuted, CanShowAppointmentPatientCommandExecte);
         #endregion
 
         #endregion

@@ -10,5 +10,7 @@ namespace HospitalApplication.Services.Interfaces
         bool Add(Patient patient);
 
         bool ConfirmWarning(string Warning, string Caption);
+
+        bool OpenAppointment(Appointment appointment);
     }
 }

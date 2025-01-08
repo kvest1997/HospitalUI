@@ -4,9 +4,73 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalApplication.Views"
+        xmlns:model="clr-namespace:Hospital.DAL.Entityes;assembly=Hospital.DAL"
+        xmlns:vm="clr-namespace:HospitalApplication.ViewModels"        
         mc:Ignorable="d"
-        Title="AppointmentWindowView" Height="450" Width="800">
+        Title="Просмотр записи" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance vm:AppointmentViewModel, IsDesignTimeCreatable=True}">
+    <Window.Resources>
+        <DataTemplate x:Key="PatientTemplate" DataType="{x:Type model:Patient}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="ФИО: " Grid.Row="0" Grid.Column="0"/>
+                <TextBox Text="{Binding FullName}" Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DoctorTemplate" DataType="{x:Type model:Doctor}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="ФИО: " Grid.Row="0" Grid.Column="0"/>
+                <TextBox Text="{Binding FullName}" Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox 
+            Grid.Column="0" 
+            Grid.Row="0"
+            Header="Пациент">
+            <ContentControl ContentTemplate="{StaticResource PatientTemplate}"/>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Column="1"
+            Grid.Row="0"
+            Header="Доктор">
+            <ContentControl ContentTemplate="{StaticResource DoctorTemplate}"/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  Header="Прием"/>
+        <Button 
+            Grid.ColumnSpan="2" 
+            Grid.Row="2" 
+            Margin="10"
+            Content="Принять"/>
     </Grid>
 </Window>

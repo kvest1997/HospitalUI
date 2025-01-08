@@ -88,7 +88,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource gridEditButton}"
-                                        Command="{Binding DataContext.EditPatientCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                        Command="{Binding DataContext.ShowAppointmentPatientCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
                                     <Icon:PackIconMaterial Kind="PencilOutline" 
                                                    Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
