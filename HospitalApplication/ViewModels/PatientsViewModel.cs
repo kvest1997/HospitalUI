@@ -106,11 +106,9 @@ namespace HospitalApplication.ViewModels
         private bool CanOpenHistoryCommandExecte(object p) => true;
         private async void OnOpenHistoryCommandExecuted(object p)
         {
-            var newPatient = new Patient();
+            var appointments = SelectedPatient.Appointments;
 
-            if (!_userDialog.Add(newPatient)) return;
-
-            Patients.Add(await _patientService.AddPatient(newPatient));
+            if (!_userDialog.OpenHistory(appointments)) return;
         }
         public ICommand OpenHistoryCommand => _openHistoryCommand
             ??= new LambdaCommand(OnOpenHistoryCommandExecuted, CanOpenHistoryCommandExecte);

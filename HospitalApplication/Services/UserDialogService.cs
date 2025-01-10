@@ -67,5 +67,18 @@ namespace HospitalApplication.Services
 
             return true;
         }
+
+        public bool OpenHistory(IEnumerable<Appointment> appointments)
+        {
+            var history_model = new PatientHistoryViewModel(appointments);
+            var history_window = new PatientHistoryWindowView
+            {
+                DataContext = history_model
+            };
+
+            if (history_window.ShowDialog() != true) return false;
+
+            return true;
+        }
     }
 }

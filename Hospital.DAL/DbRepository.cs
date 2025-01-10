@@ -221,10 +221,30 @@ namespace Hospital.DAL
             base.Items
             .Include(item => item.Hospital)
             .Include(item => item.Doctor)
-            .Include(item => item.Patient);
-            
+            .Include(item => item.Patient)
+            .Include(item => item.ExaminationResults);
 
         public AppointmentsRepository(DataContextBase db) : base(db)
+        {
+        }
+    }
+
+    class PatientRepository : DbRepository<Patient>
+    {
+        public override IQueryable<Patient> Items => base.Items
+            .Include(item => item.Appointments)
+                .ThenInclude(item => item.Hospital)
+            .Include(item => item.Appointments)
+                .ThenInclude(item => item.Doctor)
+            .Include(item => item.Appointments)
+                .ThenInclude(item => item.ExaminationResults)
+                    .ThenInclude(item => item.Diagnoses)
+            .Include(item => item.Appointments)
+                .ThenInclude(item => item.ExaminationResults)
+                    .ThenInclude(item => item.PrescribedTreatments)
+                        .ThenInclude(item => item.Analyses);
+
+        public PatientRepository(DataContextBase db) : base(db)
         {
         }
     }

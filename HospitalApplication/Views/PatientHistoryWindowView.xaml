@@ -1,15 +1,14 @@
-﻿<Window x:Class="HospitalApplication.Views.AppointmentWindowView"
+﻿<Window x:Class="HospitalApplication.Views.PatientHistoryWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HospitalApplication.Views"
         xmlns:model="clr-namespace:Hospital.DAL.Entityes;assembly=Hospital.DAL"
-        xmlns:dto="clr-namespace:HospitalApplication.Model"
-        xmlns:vm="clr-namespace:HospitalApplication.ViewModels"        
+        xmlns:vm="clr-namespace:HospitalApplication.ViewModels"
         mc:Ignorable="d"
-        Title="Просмотр записи" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance vm:AppointmentViewModel, IsDesignTimeCreatable=True}">
+        Title="История пациента" Height="600" Width="800"
+        d:DataContext="{d:DesignInstance {x:Type vm:PatientHistoryViewModel}, IsDesignTimeCreatable=True}">
     <Window.Resources>
         <DataTemplate x:Key="PatientTemplate" DataType="{x:Type model:Patient}">
             <Grid>
@@ -21,9 +20,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Content="ФИО: " Grid.Row="0" Grid.Column="0"/>
+                <Label Content="Данные пациента" Grid.Row="0"/>
+                <Label Content="ФИО: " Grid.Row="1" Grid.Column="0"/>
                 <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                         Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2" TextWrapping="WrapWithOverflow"/>
+                         Grid.Row="1" Grid.Column="1" IsEnabled="False" Margin="2" TextWrapping="WrapWithOverflow"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="DoctorTemplate" DataType="{x:Type model:Doctor}">
@@ -36,12 +36,13 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Content="ФИО: " Grid.Row="0" Grid.Column="0"/>
-                <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Grid.Row="0" Grid.Column="1" IsEnabled="False" Margin="2"
+                <Label Content="Данные доктора" Grid.Row="0"/>
+                <Label Content="ФИО: " Grid.Row="1" Grid.Column="0"/>
+                <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Grid.Row="1" Grid.Column="1" IsEnabled="False" Margin="2"
                          TextWrapping="WrapWithOverflow"/>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="ExaminationResultTemplate" DataType="{x:Type dto:ExaminationResultDto}">
+        <DataTemplate x:Key="ExaminationResultTemplate" DataType="{x:Type model:ExaminationResult}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -76,7 +77,7 @@
 
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="PrescribedTreatmentTemplate" DataType="{x:Type dto:PrescribedTreatmentDto}">
+        <DataTemplate x:Key="PrescribedTreatmentTemplate" DataType="{x:Type model:PrescribedTreatment}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -103,59 +104,73 @@
             </Grid>
         </DataTemplate>
     </Window.Resources>
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox 
-            Grid.Column="0" 
-            Grid.Row="0"
-            Header="Пациент">
-            <ContentControl ContentTemplate="{StaticResource PatientTemplate}"
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                <ContentControl ContentTemplate="{StaticResource PatientTemplate}"
                             Content="{Binding Patient}"/>
-        </GroupBox>
+            </StackPanel>
 
-        <GroupBox
-            Grid.Column="1"
-            Grid.Row="0"
-            Header="Доктор">
-            <ContentControl ContentTemplate="{StaticResource DoctorTemplate}"
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <ContentControl ContentTemplate="{StaticResource DoctorTemplate}"
                             Content="{Binding Doctor}"/>
-        </GroupBox>
-
-        <GroupBox Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Header="Прием">
+            </StackPanel>
+        </Grid>
+        
+        <ScrollViewer Grid.Row="1">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ContentControl Grid.Row="0" 
-                                ContentTemplate="{StaticResource ExaminationResultTemplate}"
-                                Content="{Binding ExaminationResult}"/>
-                
-                <GroupBox Grid.Row="1" Header="Лечение">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Column="0"
+                    Header="Прием">
+                    <ContentControl
+                        ContentTemplate="{StaticResource ExaminationResultTemplate}"
+                        Content="{Binding ExaminationResult}"/>
+                </GroupBox>
+                <GroupBox Grid.Column="1" Header="Лечение">
                     <ContentControl ContentTemplate="{StaticResource PrescribedTreatmentTemplate}"
-                                    Content="{Binding PrescribedTreatment}"/>
+                            Content="{Binding PrescribedTreatment}"/>
                 </GroupBox>
             </Grid>
-        </GroupBox>
-        <Button 
-            Style="{StaticResource addButton}"
-            Grid.ColumnSpan="2" 
-            Grid.Row="2" 
-            Margin="10"
-            Content="Принять"
-            Command="{StaticResource DialogResultCommand}"
-            CommandParameter="True"
-            HorizontalAlignment="Center"/>
+
+        </ScrollViewer>
+        
+        <ScrollViewer Grid.Row="2">
+            <DataGrid ItemsSource="{Binding Appointments}"
+                  Style="{DynamicResource DataGridStyle1}"
+                  CellStyle="{DynamicResource DataGridCellStyle1}"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                  RowStyle="{DynamicResource DataGridRowStyle1}"
+                  SelectedItem="">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Больница"
+                        IsReadOnly="True"
+                        Width="*"
+                        Binding="{Binding Hospital.NumberHospital}"/>
+                    <DataGridTextColumn Header="Доктор"
+                        IsReadOnly="True"
+                        Width="*"
+                        Binding="{Binding Doctor.FullName}"/>
+                    <DataGridTextColumn Header="Дата"
+                        IsReadOnly="True"
+                        Width="*"
+                        Binding="{Binding DateAppointment}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
     </Grid>
 </Window>
