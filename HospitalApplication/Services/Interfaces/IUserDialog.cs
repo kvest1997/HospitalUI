@@ -12,6 +12,9 @@ namespace HospitalApplication.Services.Interfaces
 
         bool ConfirmWarning(string Warning, string Caption);
 
-        bool OpenAppointment(Appointment appointment, IEnumerable<Diagnosis> diagnoses, IEnumerable<Analysis> analyses, IAccepPatientService accepPatientService);
+        bool OpenAppointment(Appointment appointment, 
+            IEnumerable<Diagnosis> diagnoses, 
+            IEnumerable<Analysis> analyses, ExaminationResult examinationResult,
+            PrescribedTreatment prescribedTreatment);
     }
 }

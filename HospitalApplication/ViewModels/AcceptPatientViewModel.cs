@@ -17,13 +17,15 @@ namespace HospitalApplication.ViewModels
         private ObservableCollection<Appointment> _appointments;
         private IEnumerable<Diagnosis> _diagnoses;
         private IEnumerable<Analysis> _analyses;
+        private IEnumerable<PrescribedTreatment> _prescribedTreatments;
 
         private Appointment _selectedAppointment;
 
         private DateTime _fromDate = DateTime.Now;
         private DateTime _toDate = DateTime.Now;
 
-        public AcceptPatientViewModel(IAccepPatientService accepPatientService, IUserDialog userDialog) 
+        public AcceptPatientViewModel(IAccepPatientService accepPatientService, 
+            IUserDialog userDialog) 
         {
             _accepPatientService = accepPatientService;
             _userDialog = userDialog;
@@ -100,9 +102,19 @@ namespace HospitalApplication.ViewModels
         #region ShowAppointmentPatient - Просмотр приема
         private ICommand _showAppointmentPatientCommand;
         private bool CanShowAppointmentPatientCommandExecte(object p) => true;
-        private void OnShowAppointmentPatientCommandExecuted(object p)
+        private async void OnShowAppointmentPatientCommandExecuted(object p)
         {
-            if (!_userDialog.OpenAppointment(SelectedAppointment, _diagnoses, _analyses, _accepPatientService)) return;
+            var examinationResult = new ExaminationResult();
+            var prescribedTreatment = new PrescribedTreatment();
+
+            if (!_userDialog.OpenAppointment(SelectedAppointment, 
+                _diagnoses, 
+                _analyses, 
+                examinationResult, prescribedTreatment)) 
+                return;
+
+            await _accepPatientService.PostExaminationResult(examinationResult);
+            await _accepPatientService.PostAppointmentResult(prescribedTreatment);
         }
 
         public ICommand ShowAppointmentPatientCommand => _showAppointmentPatientCommand
