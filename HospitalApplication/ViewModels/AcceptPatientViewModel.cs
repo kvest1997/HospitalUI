@@ -102,7 +102,7 @@ namespace HospitalApplication.ViewModels
         private bool CanShowAppointmentPatientCommandExecte(object p) => true;
         private void OnShowAppointmentPatientCommandExecuted(object p)
         {
-            if (!_userDialog.OpenAppointment(SelectedAppointment, _diagnoses, _analyses)) return;
+            if (!_userDialog.OpenAppointment(SelectedAppointment, _diagnoses, _analyses, _accepPatientService)) return;
         }
 
         public ICommand ShowAppointmentPatientCommand => _showAppointmentPatientCommand

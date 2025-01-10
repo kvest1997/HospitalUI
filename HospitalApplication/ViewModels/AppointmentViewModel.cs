@@ -14,19 +14,23 @@ namespace HospitalApplication.ViewModels
     internal class AppointmentViewModel : ViewModel
     {
         private Appointment _appointment;
+        private IAccepPatientService _acceptPatientService;
 
-        private ExaminationResultDto _examinationResult;
+        private ExaminationResultDto _examinationResult = new ExaminationResultDto();
         private PrescribedTreatmentDto _prescribedTreatment = new PrescribedTreatmentDto();
 
         private ObservableCollection<Diagnosis> _diagnosesOptions;
         private ObservableCollection<Analysis> _analyses;
 
-        public AppointmentViewModel(Appointment appointment, IEnumerable<Diagnosis> diagnoses, IEnumerable<Analysis> analyses)
+        public AppointmentViewModel(Appointment appointment, 
+            IEnumerable<Diagnosis> diagnoses, 
+            IEnumerable<Analysis> analyses, 
+            IAccepPatientService accepPatientService)
         {
             _appointment = appointment;
             _diagnosesOptions = new ObservableCollection<Diagnosis>(diagnoses);
             _analyses = new ObservableCollection<Analysis>(analyses);
-            
+            _acceptPatientService = accepPatientService;
         }
 
         #region Property
@@ -66,15 +70,28 @@ namespace HospitalApplication.ViewModels
         #region SaveAppointment - Сохранить данные приема
         private ICommand _saveAppointmentCommand;
         private bool CanSaveAppointmentCommandExecte(object p) => true;
-        private void OnSaveAppointmentCommandExecuted(object p)
+        private async void OnSaveAppointmentCommandExecuted(object p)
         {
+            var examination = await _acceptPatientService.PostExaminationResult(new Hospital.DAL.Entityes.ExaminationResult
+            {
+
+                AppointmentId = Appointment.Id,
+                DisabilityPeriod = ExaminationResult.DisabilityPeriod,
+                DiagnosesId = ExaminationResult.DiagnosesId,
+                Dispansary = ExaminationResult.Dispansary,
+                OutpatientTreatment = ExaminationResult.OutpatientTreatment,
+                Note = ExaminationResult.Note
+            });
+
             var prescribedTreatment = new PrescribedTreatment
             {
-                Procedur = _prescribedTreatment.Procedur,
-                AnalysesId = _prescribedTreatment.AnalysesId
+                Procedur = PrescribedTreatment.Procedur,
+                AnalysesId = PrescribedTreatment.AnalysesId,
+                Treatment = PrescribedTreatment.Treatment,
+                ExaminationResultsId = examination.Id
             };
 
-            
+            await _acceptPatientService.PostAppointmentResult(prescribedTreatment);
         }
 
         public ICommand SaveAppointmentCommand => _saveAppointmentCommand

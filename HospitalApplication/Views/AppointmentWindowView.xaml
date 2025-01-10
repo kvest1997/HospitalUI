@@ -49,14 +49,15 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Label Content="Диагноз: " Grid.Column="0" Grid.Row="0"/>
                 <ComboBox ItemsSource="{Binding DataContext.DiagnosesOptions, RelativeSource={RelativeSource AncestorType=Window} }" 
+                          SelectedValuePath="Id"
                           SelectedValue="{Binding DiagnosesId}"
                           Grid.Row="0" Grid.Column="1" Margin="5"
                           DisplayMemberPath="DiagnosesName"/>
@@ -65,10 +66,10 @@
                 <TextBox Text="{Binding OutpatientTreatment}" Grid.Row="1" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
 
                 <Label Content="Дата больничного" Grid.Row="2" Grid.Column="0"/>
-                <DatePicker Text="{Binding DisabilityPeriod}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+                <DatePicker SelectedDate="{Binding DisabilityPeriod}" Grid.Row="2" Grid.Column="1" Margin="5"/>
 
                 <Label Content="Диспансеризация" Grid.Row="3" Grid.Column="0"/>
-                <CheckBox Grid.Row="3" Grid.Column="1" Margin="5"/>
+                <CheckBox IsChecked="{Binding Dispansary}" Grid.Row="3" Grid.Column="1" Margin="5"/>
 
                 <Label Content="Доп. Записи" Grid.Row="4" Grid.Column="0"/>
                 <TextBox Text="{Binding Note}" Grid.Row="4" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
@@ -89,6 +90,7 @@
 
                 <Label Content="Анализы" Grid.Row="0" Grid.Column="0"/>
                 <ComboBox ItemsSource="{Binding DataContext.Analyses, RelativeSource={RelativeSource AncestorType=Window}}" 
+                          SelectedValuePath="Id"
                           SelectedValue="{Binding AnalysesId}"
                           Grid.Row="0" Grid.Column="1" Margin="5"
                           DisplayMemberPath="AnalysesName"/>
@@ -133,8 +135,8 @@
             Header="Прием">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <ContentControl Grid.Row="0" 
                                 ContentTemplate="{StaticResource ExaminationResultTemplate}"
@@ -147,6 +149,7 @@
             </Grid>
         </GroupBox>
         <Button 
+            Style="{StaticResource addButton}"
             Grid.ColumnSpan="2" 
             Grid.Row="2" 
             Margin="10"

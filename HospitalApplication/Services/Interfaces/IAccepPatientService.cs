@@ -12,5 +12,7 @@ namespace HospitalApplication.Services.Interfaces
         Task<IEnumerable<Appointment>> GetAppointmentsFromToDateAsync(DateTime fromDate, DateTime toDate);
         Task<IEnumerable<Diagnosis>> GetDiagnosesAsync();
         Task<IEnumerable<Analysis>> GetAnalysesAsync();
+        Task PostAppointmentResult(PrescribedTreatment prescribedTreatment);
+        Task<ExaminationResult> PostExaminationResult(ExaminationResult examinationResult);
     }
 }

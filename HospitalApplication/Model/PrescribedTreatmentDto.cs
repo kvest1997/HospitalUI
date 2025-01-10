@@ -20,7 +20,6 @@ namespace HospitalApplication.Model
             _examinationResultsId = examinationResultId;
             _treatment = treatment;
             _procedur = procedur;
-            _procedur = "2223";
         }
 
         public int? AnalysesId { get => _analysesId; set => Set(ref _analysesId, value); }
