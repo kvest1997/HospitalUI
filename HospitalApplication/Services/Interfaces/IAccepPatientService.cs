@@ -14,5 +14,6 @@ namespace HospitalApplication.Services.Interfaces
         Task<IEnumerable<Analysis>> GetAnalysesAsync();
         Task PostAppointmentResult(PrescribedTreatment prescribedTreatment);
         Task<ExaminationResult> PostExaminationResult(ExaminationResult examinationResult);
+        Task DeleteAppointmentByIdAcync(int id);
     }
 }

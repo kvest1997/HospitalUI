@@ -5,6 +5,7 @@ using HospitalUI.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace HospitalApplication.ViewModels
@@ -119,6 +120,27 @@ namespace HospitalApplication.ViewModels
 
         public ICommand ShowAppointmentPatientCommand => _showAppointmentPatientCommand
             ??= new LambdaCommand(OnShowAppointmentPatientCommandExecuted, CanShowAppointmentPatientCommandExecte);
+        #endregion
+
+        #region RemoveAppointmentCommand - Удаление записи на прием
+        private ICommand _removeAppointmentCommand;
+        private bool CanRemoveAppointmentCommandExecte(object p) => true;
+        private async void OnRemoveAppointmentCommandExecuted(object p)
+        {
+            var removeAppointment = SelectedAppointment;
+
+            if (!_userDialog.ConfirmWarning($"Вы хотите удалить запись?", "Удаление записи на прием")) return;
+
+            await _accepPatientService.DeleteAppointmentByIdAcync(SelectedAppointment.Id);
+            Appointments.Remove(removeAppointment);
+
+            if (ReferenceEquals(SelectedAppointment, removeAppointment))
+                SelectedAppointment = null;
+        }
+
+        public ICommand RemoveAppointmentCommand => _removeAppointmentCommand
+            ??= new LambdaCommand(OnRemoveAppointmentCommandExecuted, CanRemoveAppointmentCommandExecte);
+
         #endregion
 
         #endregion

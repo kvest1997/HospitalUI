@@ -47,5 +47,10 @@ namespace HospitalApplication.Services
         {
             await _prescribedTreatment.AddAsync(prescribedTreatment);   
         }
+
+        public async Task DeleteAppointmentByIdAcync(int id)
+        {
+            await _appointments.RemoveAsync(id);
+        }
     }
 }

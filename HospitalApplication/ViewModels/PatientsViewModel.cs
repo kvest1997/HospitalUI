@@ -89,7 +89,7 @@ namespace HospitalApplication.ViewModels
             var removePatient = SelectedPatient;
 
 
-            if (!_userDialog.ConfirmWarning($"Вы хотите пациента {removePatient.FullName}?", "Удаление пациента")) return;
+            if (!_userDialog.ConfirmWarning($"Вы хотите удалить пациента {removePatient.FullName}?", "Удаление пациента")) return;
 
             await _patientService.RemovePatient(removePatient.Id);
             Patients.Remove(removePatient);
