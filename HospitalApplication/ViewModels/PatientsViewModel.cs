@@ -101,6 +101,20 @@ namespace HospitalApplication.ViewModels
             ??= new LambdaCommand(OnRemovePatientCommandExecuted, CanRemovePatientCommandExecte);
         #endregion
 
+        #region OpenHistoryCommand - Просмотр истории пациента
+        private ICommand _openHistoryCommand;
+        private bool CanOpenHistoryCommandExecte(object p) => true;
+        private async void OnOpenHistoryCommandExecuted(object p)
+        {
+            var newPatient = new Patient();
+
+            if (!_userDialog.Add(newPatient)) return;
+
+            Patients.Add(await _patientService.AddPatient(newPatient));
+        }
+        public ICommand OpenHistoryCommand => _openHistoryCommand
+            ??= new LambdaCommand(OnOpenHistoryCommandExecuted, CanOpenHistoryCommandExecte);
+        #endregion
 
         #endregion
     }

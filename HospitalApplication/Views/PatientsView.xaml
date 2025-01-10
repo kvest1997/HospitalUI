@@ -82,7 +82,8 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="Red">
-                                    <TextBlock Text="{Binding SecondName}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
+                                    <TextBlock Text="{Binding SecondName}" 
+                                               VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
                                 </Border>
                                 <TextBlock Text="{Binding FullName}" VerticalAlignment="Center"/>
                             </StackPanel>
@@ -118,6 +119,11 @@
 
                                     <Icon:PackIconMaterial Kind="DeleteOutline" 
                                                                    Style="{StaticResource gridButtonIcon}"/>
+                                </Button>
+                                <Button Style="{StaticResource gridEditButton}" Margin="5 0 0 0"
+                                        Command="{Binding DataContext.OpenHistoryCommand,RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                    <Icon:PackIconMaterial Kind="History"
+                                                           Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
