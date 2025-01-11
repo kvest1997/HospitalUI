@@ -15,6 +15,9 @@ namespace HospitalApplication.ViewModels
         public PatientHistoryViewModel(IEnumerable<Appointment> appointments)
         {
             _appointments = appointments;
+
+            _doctor = appointments.FirstOrDefault(x => x.Doctor != null)?.Doctor;
+            _patient = appointments.FirstOrDefault(x => x.Patient != null)?.Patient;
         }
 
         public Doctor Doctor
@@ -28,7 +31,6 @@ namespace HospitalApplication.ViewModels
             get => _patient;
             set => Set(ref _patient, value);
         }
-
 
 
         public IEnumerable<Appointment> Appointments
