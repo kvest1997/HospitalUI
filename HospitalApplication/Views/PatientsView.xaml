@@ -104,7 +104,7 @@
                                             Width="*"
                                             Binding="{Binding Birthday}"/>
 
-                <DataGridTemplateColumn Header="Действия" IsReadOnly="True" Width="auto">
+                <DataGridTemplateColumn Header="Действия" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

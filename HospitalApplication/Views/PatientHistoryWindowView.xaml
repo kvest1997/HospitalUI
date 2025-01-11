@@ -7,23 +7,24 @@
         xmlns:model="clr-namespace:Hospital.DAL.Entityes;assembly=Hospital.DAL"
         xmlns:vm="clr-namespace:HospitalApplication.ViewModels"
         mc:Ignorable="d"
-        Title="История пациента" Height="600" Width="800"
+        Title="История пациента" Height="600" Width="900"
         d:DataContext="{d:DesignInstance {x:Type vm:PatientHistoryViewModel}, IsDesignTimeCreatable=True}">
     <Window.Resources>
         <DataTemplate x:Key="PatientTemplate" DataType="{x:Type model:Patient}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Данные пациента" Grid.Row="0"/>
                 <Label Content="ФИО: " Grid.Row="1" Grid.Column="0"/>
                 <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
-                         Grid.Row="1" Grid.Column="1" IsEnabled="False" Margin="2" TextWrapping="WrapWithOverflow"/>
+                         Grid.Row="1" Grid.Column="1" IsEnabled="False" Margin="2" 
+                         TextWrapping="WrapWithOverflow"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="DoctorTemplate" DataType="{x:Type model:Doctor}">
@@ -57,24 +58,23 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Диагноз: " Grid.Column="0" Grid.Row="0"/>
-                <ComboBox ItemsSource="{Binding DataContext.DiagnosesOptions, RelativeSource={RelativeSource AncestorType=Window} }" 
-                          SelectedValuePath="Id"
-                          SelectedValue="{Binding DiagnosesId}"
-                          Grid.Row="0" Grid.Column="1" Margin="5"
-                          DisplayMemberPath="DiagnosesName"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" IsEnabled="False" Text="{Binding Diagnoses.DiagnosesName}"/>
 
                 <Label Content="Назначенное лечение" Grid.Row="1" Grid.Column="0"/>
-                <TextBox Text="{Binding OutpatientTreatment}" Grid.Row="1" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
+                <TextBox Text="{Binding OutpatientTreatment}" Grid.Row="1" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"
+                         IsEnabled="False"/>
 
                 <Label Content="Дата больничного" Grid.Row="2" Grid.Column="0"/>
-                <DatePicker SelectedDate="{Binding DisabilityPeriod}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+                <DatePicker SelectedDate="{Binding DisabilityPeriod}" Grid.Row="2" Grid.Column="1" Margin="5"
+                            IsEnabled="False"/>
 
                 <Label Content="Диспансеризация" Grid.Row="3" Grid.Column="0"/>
-                <CheckBox IsChecked="{Binding Dispansary}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+                <CheckBox IsChecked="{Binding Dispansary}" Grid.Row="3" Grid.Column="1" Margin="5"
+                          IsEnabled="False"/>
 
                 <Label Content="Доп. Записи" Grid.Row="4" Grid.Column="0"/>
-                <TextBox Text="{Binding Note}" Grid.Row="4" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
-
+                <TextBox Text="{Binding Note}" Grid.Row="4" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"
+                         IsEnabled="False"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="PrescribedTreatmentTemplate" DataType="{x:Type model:PrescribedTreatment}">
@@ -90,23 +90,25 @@
                 </Grid.RowDefinitions>
 
                 <Label Content="Анализы" Grid.Row="0" Grid.Column="0"/>
-                <ComboBox ItemsSource="{Binding DataContext.Analyses, RelativeSource={RelativeSource AncestorType=Window}}" 
-                          SelectedValuePath="Id"
-                          SelectedValue="{Binding AnalysesId}"
-                          Grid.Row="0" Grid.Column="1" Margin="5"
-                          DisplayMemberPath="AnalysesName"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" IsEnabled="False"
+                         Text="{Binding Analyses.AnalysesName}"/>
 
                 <Label Content="Лечение: " Grid.Row="1" Grid.Column="0"/>
-                <TextBox Text="{Binding Treatment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
+                <TextBox Text="{Binding Treatment, UpdateSourceTrigger=PropertyChanged}" 
+                         Grid.Row="1" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"
+                         IsEnabled="False"/>
 
                 <Label Content="Процедуры: " Grid.Row="2" Grid.Column="0"/>
-                <TextBox Text="{Binding Procedur, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"/>
+                <TextBox Text="{Binding Procedur, UpdateSourceTrigger=PropertyChanged}" 
+                         Grid.Row="2" Grid.Column="1" Margin="5" TextWrapping="WrapWithOverflow"
+                         IsEnabled="False"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -128,36 +130,60 @@
                             Content="{Binding Doctor}"/>
             </StackPanel>
         </Grid>
-        
-        <ScrollViewer Grid.Row="1">
-            <Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Column="0" Content="Результаты приема"/>
+            <ComboBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding ExaminationResults}" 
+                      SelectedItem="{Binding SelectedExaminationResults}"
+                      DisplayMemberPath="DisabilityPeriod"
+                      Margin="5"/>
+
+            <Label Grid.Column="1" Content="Все лечения приема"/>
+            <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding PrescribedTreatments}" 
+                      SelectedItem="{Binding SelectedPrescribedTreatment}"
+                      DisplayMemberPath="Treatment"
+                      Margin="5"/>
+        </Grid>
+        <ScrollViewer Grid.Row="2">
+            <Grid Margin="0 10 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                
                 <GroupBox Grid.Column="0"
                     Header="Прием">
                     <ContentControl
                         ContentTemplate="{StaticResource ExaminationResultTemplate}"
-                        Content="{Binding ExaminationResult}"/>
+                        Content="{Binding SelectedExaminationResults}"/>
                 </GroupBox>
+                
                 <GroupBox Grid.Column="1" Header="Лечение">
                     <ContentControl ContentTemplate="{StaticResource PrescribedTreatmentTemplate}"
-                            Content="{Binding PrescribedTreatment}"/>
+                            Content="{Binding SelectedPrescribedTreatment}"/>
                 </GroupBox>
             </Grid>
-
         </ScrollViewer>
         
-        <ScrollViewer Grid.Row="2">
+        <ScrollViewer Grid.Row="3">
             <DataGrid ItemsSource="{Binding Appointments}"
                   Style="{DynamicResource DataGridStyle1}"
                   CellStyle="{DynamicResource DataGridCellStyle1}"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
                   RowStyle="{DynamicResource DataGridRowStyle1}"
-                  SelectedItem="">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Больница"
+                  SelectedItem="{Binding SelectedAppointment}"
+                      Margin="0 15 0 0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Больница"
                         IsReadOnly="True"
                         Width="*"
                         Binding="{Binding Hospital.NumberHospital}"/>
