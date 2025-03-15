@@ -27,27 +27,60 @@ namespace HospitalApplication.Services
             _examinationResult = dbRepositoryFactory.CreateRepository<ExaminationResult>();
         }
 
+        /// <summary>
+        /// Все записи
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Appointment>> GetAppointmentsAsync() => await _appointments.Items.ToListAsync();
 
+        /// <summary>
+        /// Получение Всех записей по датам
+        /// </summary>
+        /// <param name="fromDate">от какого числа</param>
+        /// <param name="toDate">по какое число</param>
+        /// <returns></returns>
         public async Task<IEnumerable<Appointment>> GetAppointmentsFromToDateAsync(DateTime fromDate, DateTime toDate) => 
             await _appointments.Items
             .Where(item => item.DateAppointment >= fromDate && 
                     item.DateAppointment <= toDate).ToListAsync();
 
+        /// <summary>
+        /// Получение всех диагнозов
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Diagnosis>> GetDiagnosesAsync() => await _diagnosis.Items.ToListAsync();
 
+        /// <summary>
+        /// Получение Всех анализов
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Analysis>> GetAnalysesAsync() => await _analyses.Items.ToListAsync();
 
+        /// <summary>
+        /// Отправка данных об результатах приема
+        /// </summary>
+        /// <param name="examinationResult"></param>
+        /// <returns></returns>
         public async Task<ExaminationResult> PostExaminationResult(ExaminationResult examinationResult) 
         {
             return await _examinationResult.AddAsync(examinationResult);
         }
 
+        /// <summary>
+        /// Отправка данных об лечении
+        /// </summary>
+        /// <param name="prescribedTreatment"></param>
+        /// <returns></returns>
         public async Task PostAppointmentResult(PrescribedTreatment prescribedTreatment)
         {
             await _prescribedTreatment.AddAsync(prescribedTreatment);   
         }
 
+        /// <summary>
+        /// Удаление записи по ID
+        /// </summary>
+        /// <param name="id">Id записи</param>
+        /// <returns></returns>
         public async Task DeleteAppointmentByIdAcync(int id)
         {
             await _appointments.RemoveAsync(id);

@@ -17,7 +17,6 @@ namespace Hospital.DAL.Entityes
             Doctors = new HashSet<Doctor>();
         }
 
-        public int Id { get; set; }
         public string SpecializationName { get; set; }
 
         public virtual ICollection<Doctor> Doctors { get; set; }
