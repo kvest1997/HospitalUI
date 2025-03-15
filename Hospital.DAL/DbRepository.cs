@@ -242,7 +242,9 @@ namespace Hospital.DAL
             .Include(item => item.Appointments)
                 .ThenInclude(item => item.ExaminationResults)
                     .ThenInclude(item => item.PrescribedTreatments)
-                        .ThenInclude(item => item.Analyses);
+                        .ThenInclude(item => item.Analyses)
+            .Include(item=>  item.Operations);
+        
 
         public PatientRepository(DataContextBase db) : base(db)
         {

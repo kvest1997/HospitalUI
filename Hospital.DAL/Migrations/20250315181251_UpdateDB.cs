@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Hospital.DAL.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class UpdateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -216,6 +216,41 @@ namespace Hospital.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Operations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    ExaminationResultId = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    NameOperation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeOperation = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Operations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Operations_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Operations_ExaminationResults_ExaminationResultId",
+                        column: x => x.ExaminationResultId,
+                        principalTable: "ExaminationResults",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Operations_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PrescribedTreatments",
                 columns: table => new
                 {
@@ -279,6 +314,21 @@ namespace Hospital.DAL.Migrations
                 column: "StaffId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Operations_DoctorId",
+                table: "Operations",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Operations_ExaminationResultId",
+                table: "Operations",
+                column: "ExaminationResultId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Operations_PatientId",
+                table: "Operations",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PrescribedTreatments_AnalysesId",
                 table: "PrescribedTreatments",
                 column: "AnalysesId");
@@ -301,6 +351,9 @@ namespace Hospital.DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Operations");
+
             migrationBuilder.DropTable(
                 name: "PrescribedTreatments");
 

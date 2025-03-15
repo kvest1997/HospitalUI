@@ -42,11 +42,37 @@ namespace HospitalApplication.Data
             //await InitializeStaffs();
             //await InitializeHospitals();
             //await InitializeDiagnoses();
+            //await InitializeOperations();
             #endregion
 
             _Logger.LogInformation($"Инициализация БД выполнена за {timer.Elapsed.TotalSeconds} с");
         }
         
+        private async Task InitializeOperations()
+        {
+            Operations[] operations;
+            var timer = Stopwatch.StartNew();
+            _Logger.LogInformation("Инициализация операций...");
+            Random rand = new Random();
+            operations = new Operations[10];
+            for (int i = 0; i < 10; i++)
+            {
+                operations[i] = new Operations
+                {
+                    PatientId = rand.Next(1,5),
+                    ExaminationResultId = rand.Next(4,8),
+                    DoctorId = rand.Next(1, 5),
+                    NameOperation = $"Название операции {i}",
+                    TypeOperation = $"Тип операции {i}"
+                };
+            }
+
+            await _db.Operations.AddRangeAsync(operations);
+            await _db.SaveChangesAsync();
+
+            _Logger.LogInformation($"Инициализация операций выполнена за {timer.ElapsedMilliseconds} мс");
+        }
+
         private async Task InitializeDiagnoses()
         {
             Diagnosis[] _diagnoses;

@@ -16,6 +16,7 @@ namespace Hospital.DAL.Entityes
         {
             Appointments = new HashSet<Appointment>();
             Staff = new HashSet<Staff>();
+            Operations = new HashSet<Operations>();
         }
 
         public string SecondName { get; set; }
@@ -26,6 +27,7 @@ namespace Hospital.DAL.Entityes
         public virtual Specialization Specialization { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual ICollection<Staff> Staff { get; set; }
+        public virtual ICollection<Operations> Operations { get; set; }
 
         public string FullName => $"{SecondName} {FirstName} {LastName}";
     }

@@ -19,6 +19,7 @@ namespace Hospital.DAL.Context
         public virtual DbSet<PrescribedTreatment> PrescribedTreatments { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<Staff> Staff { get; set; }
+        public virtual DbSet<Operations> Operations { get; set; }
 
         public DataContextBase(DbContextOptions<DataContextBase> options) : base(options) { }
     }

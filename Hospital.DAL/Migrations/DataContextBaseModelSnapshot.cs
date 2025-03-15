@@ -174,6 +174,39 @@ namespace Hospital.DAL.Migrations
                     b.ToTable("Hospitals");
                 });
 
+            modelBuilder.Entity("Hospital.DAL.Entityes.Operations", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExaminationResultId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameOperation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeOperation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("ExaminationResultId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Operations");
+                });
+
             modelBuilder.Entity("Hospital.DAL.Entityes.Patient", b =>
                 {
                     b.Property<int>("Id")
@@ -341,6 +374,33 @@ namespace Hospital.DAL.Migrations
                     b.Navigation("Staff");
                 });
 
+            modelBuilder.Entity("Hospital.DAL.Entityes.Operations", b =>
+                {
+                    b.HasOne("Hospital.DAL.Entityes.Doctor", "Doctor")
+                        .WithMany("Operations")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.DAL.Entityes.ExaminationResult", "ExaminationResult")
+                        .WithMany("Operations")
+                        .HasForeignKey("ExaminationResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hospital.DAL.Entityes.Patient", "Patient")
+                        .WithMany("Operations")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("ExaminationResult");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("Hospital.DAL.Entityes.PrescribedTreatment", b =>
                 {
                     b.HasOne("Hospital.DAL.Entityes.Analysis", "Analyses")
@@ -390,11 +450,15 @@ namespace Hospital.DAL.Migrations
                 {
                     b.Navigation("Appointments");
 
+                    b.Navigation("Operations");
+
                     b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("Hospital.DAL.Entityes.ExaminationResult", b =>
                 {
+                    b.Navigation("Operations");
+
                     b.Navigation("PrescribedTreatments");
                 });
 
@@ -406,6 +470,8 @@ namespace Hospital.DAL.Migrations
             modelBuilder.Entity("Hospital.DAL.Entityes.Patient", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Operations");
                 });
 
             modelBuilder.Entity("Hospital.DAL.Entityes.Position", b =>

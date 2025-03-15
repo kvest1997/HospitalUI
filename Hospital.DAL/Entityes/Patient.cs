@@ -15,6 +15,7 @@ namespace Hospital.DAL.Entityes
         public Patient()
         {
             Appointments = new HashSet<Appointment>();
+            Operations = new HashSet<Operations>();
         }
 
         public string SecondName { get; set; }
@@ -25,6 +26,7 @@ namespace Hospital.DAL.Entityes
         public int? NumberPhone { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<Operations> Operations { get; set; }
 
         public string FullName => $"{SecondName} {FirstName} {LastName}";
     }
