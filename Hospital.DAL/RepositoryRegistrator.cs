@@ -21,7 +21,7 @@ namespace Hospital.DAL
             .AddTransient<IRepository<PrescribedTreatment>, PrescribedTreatmentsRepository>()
             .AddTransient<IRepository<Specialization>, DbRepository<Specialization>>()
             .AddTransient<IRepository<Staff>, StaffRepository>()
-            .AddTransient<IRepository<Operations>, DbRepository<Operations>>();
-        
+            .AddTransient<IRepository<Operations>, DbRepository<Operations>>()
+            .AddTransient<IRepository<OperationTypes>, DbRepository<OperationTypes>>();
     }
 }

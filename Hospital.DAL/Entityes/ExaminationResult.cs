@@ -15,7 +15,6 @@ namespace Hospital.DAL.Entityes
         public ExaminationResult()
         {
             PrescribedTreatments = new HashSet<PrescribedTreatment>();
-            Operations = new HashSet<Operations>();
         }
 
         public int? AppointmentId { get; set; }
@@ -28,7 +27,6 @@ namespace Hospital.DAL.Entityes
         public virtual Appointment Appointment { get; set; }
         public virtual Diagnosis Diagnoses { get; set; }
         public virtual ICollection<PrescribedTreatment> PrescribedTreatments { get; set; }
-        public virtual ICollection<Operations> Operations { get; set; }
            
     }
 }

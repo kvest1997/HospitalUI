@@ -42,7 +42,9 @@ namespace HospitalApplication.Data
             //await InitializeStaffs();
             //await InitializeHospitals();
             //await InitializeDiagnoses();
+            //await InitializeOperationTypes();
             //await InitializeOperations();
+
             #endregion
 
             _Logger.LogInformation($"Инициализация БД выполнена за {timer.Elapsed.TotalSeconds} с");
@@ -59,15 +61,36 @@ namespace HospitalApplication.Data
             {
                 operations[i] = new Operations
                 {
-                    PatientId = rand.Next(1,5),
-                    ExaminationResultId = rand.Next(4,8),
+                    PatientId = rand.Next(1, 5),
                     DoctorId = rand.Next(1, 5),
-                    NameOperation = $"Название операции {i}",
-                    TypeOperation = $"Тип операции {i}"
+                    OperationDate = DateTime.Now,
+                    OperationTypeId = rand.Next(1, 3)
                 };
             }
 
             await _db.Operations.AddRangeAsync(operations);
+            await _db.SaveChangesAsync();
+
+            _Logger.LogInformation($"Инициализация операций выполнена за {timer.ElapsedMilliseconds} мс");
+        }
+
+        private async Task InitializeOperationTypes()
+        {
+            OperationTypes[] operationTypes;
+            var timer = Stopwatch.StartNew();
+            _Logger.LogInformation("Инициализация операций...");
+            Random rand = new Random();
+            operationTypes = new OperationTypes[10];
+            for (int i = 0; i < 10; i++)
+            {
+                operationTypes[i] = new OperationTypes
+                {
+                    Name = $"Операция {i}",
+                    Type = $"Тип операции {i}"
+                };
+            }
+
+            await _db.OperationTypes.AddRangeAsync(operationTypes);
             await _db.SaveChangesAsync();
 
             _Logger.LogInformation($"Инициализация операций выполнена за {timer.ElapsedMilliseconds} мс");

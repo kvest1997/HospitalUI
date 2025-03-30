@@ -1,5 +1,4 @@
 ﻿using Hospital.DAL.Entityes.Base;
-using Hospital.Interfaces;
 using System;
 using System.Collections.Generic;
 
